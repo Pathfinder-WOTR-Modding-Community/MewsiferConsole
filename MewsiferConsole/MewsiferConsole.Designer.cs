@@ -74,7 +74,7 @@
       this.dataGridView1.RowTemplate.Height = 33;
       this.dataGridView1.Size = new System.Drawing.Size(1361, 715);
       this.dataGridView1.TabIndex = 0;
-      this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+      this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellContentClick);
       // 
       // ChannelName
       // 
@@ -146,7 +146,7 @@
       this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.Name = "MewsiferConsole";
       this.Text = "MewsiferConsole";
-      this.Load += new System.EventHandler(this.Form1_Load);
+      this.Load += new System.EventHandler(this.Console_Load);
       this.tableLayoutPanel1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
       this.tableLayoutPanel2.ResumeLayout(false);

@@ -5,140 +5,127 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace MewsiferConsole
 {
-    public partial class MewsiferConsole : Form
+  public partial class MewsiferConsole : Form
+  {
+    private readonly BindingSource BindingSource;
+    private readonly BindingList<LogMessageViewModel> Messages;
+    private readonly LogMessageFilterView FilterView;
+
+    private readonly object QueueLock = new();
+    private readonly List<LogMessage>[] Queues = { new(), new() };
+    private int IncomingIndex = 0;
+
+    private readonly Timer Timer;
+
+    private bool IsScrolledToEnd
     {
-        private readonly BindingSource bindingSource;
-        private readonly BindingList<LogMessageViewModel> messages;
-        private readonly LogMessageFilterView filterView;
-
-        private object queueLock = new();
-        private List<LogMessage>[] queues =
+      get
+      {
+        int firstDisplayed = dataGridView1.FirstDisplayedScrollingRowIndex;
+        int lastVisible = firstDisplayed + dataGridView1.DisplayedRowCount(true) - 1;
+        return lastVisible == dataGridView1.RowCount - 1;
+      }
+      set
+      {
+        if (dataGridView1.RowCount > 0)
         {
-            new(), new()
-        };
-        private int incomingIndex = 0;
-
-        private Timer timer;
-
-        private bool IsScrolledToEnd
-        {
-            get
-            {
-                int firstDisplayed = dataGridView1.FirstDisplayedScrollingRowIndex;
-                int lastVisible = firstDisplayed + dataGridView1.DisplayedRowCount(true) - 1;
-                return lastVisible == dataGridView1.RowCount - 1;
-            }
-            set
-            {
-                if (dataGridView1.RowCount > 0)
-                    dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.RowCount - 1;
-            }
-
+          dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.RowCount - 1;
         }
-
-        private readonly Dictionary<string, List<int>> indexRowLookup = new();
-        private readonly Dictionary<string, List<int>> byChannel = new();
-
-        public MewsiferConsole()
-        {
-            InitializeComponent();
-            bindingSource = new();
-            messages = new();
-            filterView = new(messages);
-            dataGridView1.AutoGenerateColumns = true;
-
-            bindingSource.DataSource = filterView;
-            dataGridView1.DataSource = filterView;
-
-
-            Server.Instance.ConsumeAll(msg =>
-            {
-                lock (queueLock)
-                {
-                    queues[incomingIndex].Add(msg);
-                }
-            });
-
-            dataGridView1.Scroll += (obj, evt) =>
-            {
-                if (evt.NewValue < evt.OldValue)
-                    TailToggle.Checked = false;
-                if (evt.NewValue > evt.OldValue && IsScrolledToEnd)
-                    TailToggle.Checked = true;
-            };
-
-            TailToggle.CheckedChanged += (obj, evt) =>
-            {
-                if (TailToggle.Checked && !IsScrolledToEnd)
-                    IsScrolledToEnd = true;
-            };
-
-            OmniFilter.TextChanged += (obj, evt) =>
-            {
-                filterView.Filter = OmniFilter.Text.Trim();
-            };
-
-            timer = new();
-            timer.Interval = 33;
-            timer.Tick += (obj, evt) =>
-            {
-                List<LogMessage> toProcess;
-                lock(queueLock)
-                {
-                    toProcess = queues[incomingIndex];
-                    incomingIndex = (incomingIndex == 0) ? 1 : 0;
-                }
-
-                //messages.RaiseListChangedEvents = false;
-                int addCount = 0;
-                foreach (var rawMessage in toProcess)
-                {
-                    if (rawMessage.Control) continue;
-                    LogMessageViewModel? prev = messages.Count > 0 ? messages.Last() : null;
-
-                    if (prev?.MergesWith(rawMessage) == true)
-                    {
-                        prev.MergedCount++;
-                    }
-                    else
-                    {
-                        LogMessageViewModel newMessage = new(rawMessage);
-                        messages.Add(newMessage);
-
-                        AddIndex(indexRowLookup, newMessage.Message, messages.Count);
-                        AddIndex(byChannel, newMessage.ChannelName, messages.Count);
-
-                        addCount++;
-                    }
-                }
-
-                if (addCount > 0 && TailToggle.Checked)
-                    IsScrolledToEnd = true;
-
-                //messages.RaiseListChangedEvents = true;
-                //bindingSource.ResetBindings(false);
-                toProcess.Clear();
-            };
-            timer.Start();
-        }
-
-
-        private static void AddIndex(Dictionary<string, List<int>> index, string key, int row)
-        {
-            if (index.TryGetValue(key, out var list))
-                list.Add(row);
-            else
-                index[key] = new() { row };
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
+      }
     }
+
+    private readonly Dictionary<string, List<int>> IndexRowLookup = new();
+    private readonly Dictionary<string, List<int>> ByChannel = new();
+
+    public MewsiferConsole()
+    {
+      InitializeComponent();
+      BindingSource = new();
+      Messages = new();
+      FilterView = new(Messages);
+      dataGridView1.AutoGenerateColumns = true;
+
+      BindingSource.DataSource = FilterView;
+      dataGridView1.DataSource = FilterView;
+
+      Server.Instance.ConsumeAll(msg =>
+      {
+        lock (QueueLock)
+        {
+          Queues[IncomingIndex].Add(msg);
+        }
+      });
+
+      dataGridView1.Scroll += (obj, evt) =>
+      {
+        if (evt.NewValue < evt.OldValue) { TailToggle.Checked = false; }
+        if (evt.NewValue > evt.OldValue && IsScrolledToEnd) { TailToggle.Checked = true; }
+      };
+
+      TailToggle.CheckedChanged += (obj, evt) =>
+      {
+        if (TailToggle.Checked && !IsScrolledToEnd) { IsScrolledToEnd = true; }
+      };
+
+      OmniFilter.TextChanged += (obj, evt) =>
+      {
+        FilterView.Filter = OmniFilter.Text.Trim();
+      };
+
+      Timer = new()
+      {
+        Interval = 33
+      };
+
+      Timer.Tick += (obj, evt) =>
+      {
+        List<LogMessage> toProcess;
+        lock(QueueLock)
+        {
+          toProcess = Queues[IncomingIndex];
+          IncomingIndex = (IncomingIndex == 0) ? 1 : 0;
+        }
+
+        //messages.RaiseListChangedEvents = false;
+        int addCount = 0;
+        foreach (var rawMessage in toProcess)
+        {
+          if (rawMessage.Control) { continue; }
+          LogMessageViewModel? prev = Messages.Count > 0 ? Messages.Last() : null;
+
+          if (prev?.MergesWith(rawMessage) == true)
+          {
+            prev.MergedCount++;
+          }
+          else
+          {
+            LogMessageViewModel newMessage = new(rawMessage);
+            Messages.Add(newMessage);
+
+            AddIndex(IndexRowLookup, newMessage.Message, Messages.Count);
+            AddIndex(ByChannel, newMessage.ChannelName, Messages.Count);
+
+            addCount++;
+          }
+        }
+
+        if (addCount > 0 && TailToggle.Checked) { IsScrolledToEnd = true; }
+
+        //messages.RaiseListChangedEvents = true;
+        //bindingSource.ResetBindings(false);
+        toProcess.Clear();
+      };
+      Timer.Start();
+    }
+
+    private static void AddIndex(Dictionary<string, List<int>> index, string key, int row)
+    {
+      if (index.TryGetValue(key, out var list)) { list.Add(row); }
+      else { index[key] = new() { row }; }
+    }
+
+    private void Console_Load(object sender, EventArgs e) { }
+
+    private void dataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+  }
 }
