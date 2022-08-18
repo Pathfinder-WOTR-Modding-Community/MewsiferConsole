@@ -12,13 +12,8 @@ namespace MewsiferConsole.Mod.OwlcatLogging
   /// <summary>
   /// Forwards log events to MewsiferConsole using <see cref="Client"/>.
   /// </summary>
-  public class ConsoleLogSink : ILogSink
+  public class OwlcatLogSink : ILogSink
   {
-    public ConsoleLogSink()
-    {
-      Client.Instance.Initialize();
-    }
-
     public void Log(LogInfo logInfo)
     {
       try
@@ -30,14 +25,8 @@ namespace MewsiferConsole.Mod.OwlcatLogging
       }
       catch (Exception e)
       {
-        Main.Logger.LogException("Failed to process log.", e);
+        Main.Logger.LogException("Failed to process owlcat log.", e);
       }
-    }
-
-    public void Destroy()
-    {
-      Main.Logger.Log("Destroying log sink.");
-      Client.Instance.Dispose();
     }
 
     private static PipeMessage CreatePipeMessage(LogInfo logInfo)
@@ -62,5 +51,7 @@ namespace MewsiferConsole.Mod.OwlcatLogging
         _ => throw new ArgumentOutOfRangeException($"Unsupported Owlcat LogSeverity: {severity}")
       };
     }
+
+    public void Destroy() { }
   }
 }
