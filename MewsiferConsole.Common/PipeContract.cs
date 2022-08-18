@@ -28,27 +28,17 @@ namespace MewsiferConsole.Common
 
       public static PipeMessage ForServerCommand(ClientToServerCommand serverCommand)
       {
-        return new PipeMessage(serverCommand);
-      }
-
-      private PipeMessage(ClientToServerCommand serverCommand)
-      {
-        ServerCommand = serverCommand;
+        return new PipeMessage(serverCommand: serverCommand);
       }
 
       public static PipeMessage ForLogEvent(
         LogSeverity severity, string channel, string message, List<string> stackTrace = null)
       {
-        return new PipeMessage(new LogEvent(severity, channel, message, stackTrace));
-      }
-
-      private PipeMessage(LogEvent logEvent)
-      {
-        LogEvent = logEvent;
+        return new PipeMessage(logEvent: new(severity, channel, message, stackTrace));
       }
 
       [JsonConstructor]
-      private PipeMessage(ClientToServerCommand serverCommand, LogEvent logEvent)
+      private PipeMessage(ClientToServerCommand serverCommand = null, LogEvent logEvent = null)
       {
         ServerCommand = serverCommand;
         LogEvent = logEvent;

@@ -10,13 +10,16 @@ namespace MewsiferConsole.Common
     [JsonProperty]
     public readonly ConnectionTest ConnectionTest;
 
+    [JsonProperty]
+    public readonly CaptureBugReport CaptureBugReport;
+
     public static ClientToServerCommand TestConnection()
     {
-      return new ClientToServerCommand(new ConnectionTest());
+      return new ClientToServerCommand(connectionTest: new());
     }
 
     [JsonConstructor]
-    private ClientToServerCommand(ConnectionTest connectionTest)
+    private ClientToServerCommand(CaptureBugReport bugReport = null, ConnectionTest connectionTest = null)
     {
       ConnectionTest = connectionTest;
     }
@@ -27,4 +30,9 @@ namespace MewsiferConsole.Common
   /// will remain "connected" even after the server disconnects.
   /// </summary>
   public class ConnectionTest { }
+
+  public class CaptureBugReport
+  {
+
+  }
 }
