@@ -4,43 +4,39 @@ using static MewsiferConsole.Common.PipeContract;
 
 namespace MewsiferConsole.IPC
 {
-  internal class Server
+  internal class Server : IRawMessageSource
   {
-    private NamedPipeServerStream? Pipe;
-    private BinaryReader? Reader;
-    private bool Enabled = true; 
+    private bool Enabled = true;
 
-    private static Server? _Instance;
-    public static Server Instance => _Instance ??= new();
+    public event HandleRawMessage? RawMessage;
+    public event TitleChanged? TitleChanged;
 
-    public void ConsumeAll(Action<PipeMessage> callback)
+
+    public void Start()
     {
-      Task.Run(() =>
+      while (Enabled)
       {
-        while (Enabled)
+        TitleChanged?.Invoke("Waiting for connection from game");
+        Console.WriteLine("Creating pipe with name: " + PipeName);
+        using NamedPipeServerStream Pipe = new(PipeName, PipeDirection.In, 2, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+        using BinaryReader Reader = new(Pipe);
+
+        Pipe.WaitForConnection();
+        TitleChanged?.Invoke("Connected to game");
+
+        while (Pipe.IsConnected)
         {
-          Console.WriteLine("Creating pipe with name: " + PipeName);
-          Pipe = new(PipeName, PipeDirection.In, 2, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
-          Reader = new(Pipe);
-          Pipe.WaitForConnection();
-
-          while (Pipe.IsConnected)
+          try
           {
-            try
-            {
-              var raw = Reader.ReadString();
-              callback(JsonConvert.DeserializeObject<PipeMessage>(raw));
-            }
-            catch (Exception ex)
-            {
-              Console.WriteLine(ex.Message);
-            }
+            var raw = Reader.ReadString();
+            RawMessage?.Invoke(raw);
           }
-
-          Reader.Dispose();
-          Pipe.Dispose();
+          catch (Exception ex)
+          {
+            Console.WriteLine(ex.Message);
+          }
         }
-      });
+      }
     }
   }
 }

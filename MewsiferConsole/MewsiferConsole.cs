@@ -48,16 +48,21 @@ namespace MewsiferConsole
       BindingSource.DataSource = FilterView;
       dataGridView1.DataSource = FilterView;
 
-      Server.Instance.ConsumeAll(msg =>
+      App.MessageSource.LogEvent += logEvent =>
       {
-        if (msg.LogEvent is not null)
+        lock (QueueLock)
         {
-          lock (QueueLock)
-          {
-            Queues[IncomingIndex].Add(msg.LogEvent);
-          }
+          Queues[IncomingIndex].Add(logEvent);
         }
-      });
+      };
+
+      App.MessageSource.TitleChanged += title =>
+      {
+        Console.WriteLine(title);
+        BeginInvoke(() => this.Text = $"MewsiferConsole - {title}");
+      };
+
+      App.MessageSource.Start();
 
       dataGridView1.Scroll += (obj, evt) =>
       {
