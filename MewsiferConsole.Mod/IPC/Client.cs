@@ -121,7 +121,6 @@ namespace MewsiferConsole.Mod.IPC
           TestConnection(writer);
           if (LogQueue.Any() && LogQueue.TryDequeue(out string message))
           {
-            Main.Logger.NativeLog(message);
             writer.Write(message);
             writer.Flush();
           }
