@@ -21,11 +21,16 @@ namespace MewsiferConsole.Mod
         Logger = modEntry.Logger;
         modEntry.OnUnload = OnUnload;
 
+        // Initialize log sinks before harmony patches or it might result in exceptions thrown.
+        var logEventHandler = new LogEventHandler();
+        UMMLoggingPatches.Initialize(new(logEventHandler));
+
+        Owlcat.Runtime.Core.Logging.Logger.Instance.AddLogger(new OwlcatLogSink(logEventHandler));
+
         Harmony = new(modEntry.Info.Id);
         Harmony.PatchAll();
 
-        Owlcat.Runtime.Core.Logging.Logger.Instance.AddLogger(new OwlcatLogSink());
-
+        logEventHandler.Init();
         Client.Instance.Initialize();
         Logger.Log("Finished loading.");
       }

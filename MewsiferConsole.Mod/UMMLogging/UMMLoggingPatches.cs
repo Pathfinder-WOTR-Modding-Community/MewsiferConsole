@@ -8,8 +8,14 @@ namespace MewsiferConsole.Mod.UMMLogging
 {
   internal class UMMLoggingPatches
   {
-    private static readonly UMMLogSink LogSink = new();
     private static readonly FieldInfo Prefix = AccessTools.Field(typeof(ModLogger), "Prefix");
+
+    private static UMMLogSink LogSink;
+
+    public static void Initialize(UMMLogSink logSink)
+    {
+      LogSink = logSink;
+    }
 
     [HarmonyPatch(typeof(ModLogger))]
     static class ModLogger_Patch

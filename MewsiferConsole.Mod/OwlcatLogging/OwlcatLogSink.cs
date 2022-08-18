@@ -1,4 +1,5 @@
-﻿using MewsiferConsole.Mod.IPC;
+﻿using MewsiferConsole.Common;
+using MewsiferConsole.Mod.IPC;
 using Owlcat.Runtime.Core.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,13 +15,20 @@ namespace MewsiferConsole.Mod.OwlcatLogging
   /// </summary>
   internal class OwlcatLogSink : ILogSink
   {
+    private readonly ILogEventHandler LogEventHandler;
+
+    public OwlcatLogSink(ILogEventHandler logEventHandler)
+    {
+      LogEventHandler = logEventHandler;
+    }
+
     public void Log(LogInfo logInfo)
     {
       try
       {
         if (!string.IsNullOrEmpty(logInfo?.Message) && logInfo.Severity != OwlcatSeverity.Disabled)
         {
-          Client.Instance.SendMessage(CreatePipeMessage(logInfo));
+          LogEventHandler.OnLogEvent(CreateLogEvent(logInfo));
         }
       }
       catch (Exception e)
@@ -29,7 +37,7 @@ namespace MewsiferConsole.Mod.OwlcatLogging
       }
     }
 
-    private static PipeMessage CreatePipeMessage(LogInfo logInfo)
+    private static LogEvent CreateLogEvent(LogInfo logInfo)
     {
       var stackTrace = new List<string>();
       if (logInfo.Callstack is not null && logInfo.Callstack.Any())
@@ -37,8 +45,7 @@ namespace MewsiferConsole.Mod.OwlcatLogging
         stackTrace.AddRange(logInfo.Callstack.Select(frame => frame.GetFormattedMethodName()));
       }
 
-      return PipeMessage.ForLogEvent(
-        GetSeverity(logInfo.Severity), logInfo.Channel.Name, logInfo.Message, stackTrace);
+      return new(GetSeverity(logInfo.Severity), logInfo.Channel.Name, logInfo.Message, stackTrace);
     }
 
     private static MewsiferSeverity GetSeverity(OwlcatSeverity severity)

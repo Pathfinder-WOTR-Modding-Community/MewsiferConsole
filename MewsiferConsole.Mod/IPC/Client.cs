@@ -17,9 +17,9 @@ namespace MewsiferConsole.Mod.IPC
   internal class Client : IDisposable
   {
     /// <summary>
-    /// Max log lines in the queue after which they will be discarded.
+    /// Max messages in the queue after which they will be discarded.
     /// </summary>
-    private const int MaxQueue = 100000;
+    private const int MaxQueue = 20000;
 
     private static Client _instance;
     internal static Client Instance => _instance ??= new();
@@ -33,15 +33,20 @@ namespace MewsiferConsole.Mod.IPC
     private bool Enabled;
     private NamedPipeClientStream Stream; 
     private Thread Thread;
-    // Queue of LogMessage serialized to Json
-    private readonly ConcurrentQueue<string> LogQueue = new();
+    // Queue of PipeMessage serialized to Json
+    private readonly ConcurrentQueue<string> MessageQueue = new();
 
+    internal static readonly string VersionCheck =
+      JsonConvert.SerializeObject(PipeContract.VersionCheck, SerializerSettings);
     internal void Initialize()
     {
       if (Thread is not null)
       {
         Dispose();
       }
+
+      // First thing is to check the version
+      MessageQueue.Enqueue(VersionCheck);
 
       Enabled = true;
       Thread = new Thread(new ThreadStart(InitializeAsync));
@@ -51,13 +56,17 @@ namespace MewsiferConsole.Mod.IPC
     /// <summary>
     /// Adds a message to the queue for send to the console.
     /// </summary>
-    internal void SendMessage(PipeMessage message)
+    /// 
+    /// <returns>The JSON serialized message sent.</returns>
+    internal string SendMessage(PipeMessage message)
     {
-      LogQueue.Enqueue(JsonConvert.SerializeObject(message, SerializerSettings));
-      if (LogQueue.Count > MaxQueue)
+      var serializedMessage = JsonConvert.SerializeObject(message, SerializerSettings);
+      MessageQueue.Enqueue(serializedMessage);
+      if (MessageQueue.Count > MaxQueue)
       {
-        LogQueue.TryDequeue(out _);
+        MessageQueue.TryDequeue(out _);
       }
+      return serializedMessage;
     }
 
     public void Dispose()
@@ -69,7 +78,6 @@ namespace MewsiferConsole.Mod.IPC
         Thread.Abort();
       }
     }
-
     /// <summary>
     /// Since async pipes aren't available just loop waiting for input in a thread. This is the outer loop which
     /// connects and reconnects, WriteStream is the inner loop which writes output.
@@ -119,7 +127,7 @@ namespace MewsiferConsole.Mod.IPC
         while (Enabled)
         {
           TestConnection(writer);
-          if (LogQueue.Any() && LogQueue.TryDequeue(out string message))
+          if (MessageQueue.Any() && MessageQueue.TryDequeue(out string message))
           {
             writer.Write(message);
             writer.Flush();

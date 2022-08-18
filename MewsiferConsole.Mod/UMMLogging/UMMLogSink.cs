@@ -8,11 +8,18 @@ namespace MewsiferConsole.Mod.UMMLogging
 {
   public class UMMLogSink
   {
+    private readonly ILogEventHandler LogEventHandler;
+
+    public UMMLogSink(ILogEventHandler logEventHandler)
+    {
+      LogEventHandler = logEventHandler;
+    }
+
     public void Log(LogSeverity severity, string channel, string message)
     {
       try
       {
-        Client.Instance.SendMessage(CreatePipeMessage(severity, channel, message));
+        LogEventHandler.OnLogEvent(CreateLogEvent(severity, channel, message));
       }
       catch (Exception e)
       {
@@ -28,7 +35,7 @@ namespace MewsiferConsole.Mod.UMMLogging
           string.IsNullOrEmpty(key)
             ? $"An exception ({ex.GetType().Name}) occurred."
             : $"An exception ({ex.GetType().Name} - {key}) occurred.";
-        Client.Instance.SendMessage(CreatePipeMessage(LogSeverity.Error, channel, message, ex));
+        LogEventHandler.OnLogEvent(CreateLogEvent(LogSeverity.Error, channel, message, ex));
       }
       catch (Exception e)
       {
@@ -36,7 +43,7 @@ namespace MewsiferConsole.Mod.UMMLogging
       }
     }
 
-    private static PipeMessage CreatePipeMessage(
+    private static LogEvent CreateLogEvent(
       LogSeverity severity, string channel, string message, Exception ex = null)
     {
       var stackTrace = new List<string>();
@@ -46,7 +53,7 @@ namespace MewsiferConsole.Mod.UMMLogging
         ex = ex.InnerException;
         stackTrace.Add("-- Inner: ");
       }
-      return PipeMessage.ForLogEvent(severity, channel, message, stackTrace);
+      return new(severity, channel, message, stackTrace);
     }
   }
 }
