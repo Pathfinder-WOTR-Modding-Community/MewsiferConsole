@@ -12,9 +12,6 @@ namespace MewsiferConsole.Mod
   public static class Main
   {
     public static ModLogger Logger;
-
-    private static OwlcatLogSink OwlcatLogSink;
-    private static UMMLogSink UMMLogSink;
     private static Harmony Harmony;
 
     public static bool Load(ModEntry modEntry)
@@ -27,10 +24,7 @@ namespace MewsiferConsole.Mod
         Harmony = new(modEntry.Info.Id);
         Harmony.PatchAll();
 
-        OwlcatLogSink = new();
-        Owlcat.Runtime.Core.Logging.Logger.Instance.AddLogger(OwlcatLogSink);
-
-        UMMLogSink = new();
+        Owlcat.Runtime.Core.Logging.Logger.Instance.AddLogger(new OwlcatLogSink());
 
         Client.Instance.Initialize();
         Logger.Log("Finished loading.");
@@ -46,11 +40,7 @@ namespace MewsiferConsole.Mod
     {
       Logger.Log("Unloading.");
       Harmony?.UnpatchAll();
-
       Client.Instance?.Dispose();
-      UMMLogSink = null;
-      OwlcatLogSink = null;
-
       return true;
     }
   }
