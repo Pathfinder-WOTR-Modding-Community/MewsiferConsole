@@ -14,7 +14,7 @@ namespace MewsiferConsole.Mod.IPC
   /// <summary>
   /// Client for MewsiferConsole. Forwards log messages to MewsiferConsole.
   /// </summary>
-  public class Client : IDisposable
+  internal class Client : IDisposable
   {
     /// <summary>
     /// Max log lines in the queue after which they will be discarded.
@@ -22,7 +22,7 @@ namespace MewsiferConsole.Mod.IPC
     private const int MaxQueue = 100000;
 
     private static Client _instance;
-    public static Client Instance => _instance ??= new();
+    internal static Client Instance => _instance ??= new();
 
     private static readonly JsonSerializerSettings SerializerSettings =
       new()
@@ -36,7 +36,7 @@ namespace MewsiferConsole.Mod.IPC
     // Queue of LogMessage serialized to Json
     private readonly ConcurrentQueue<string> LogQueue = new();
 
-    public void Initialize()
+    internal void Initialize()
     {
       if (Thread is not null)
       {
@@ -51,7 +51,7 @@ namespace MewsiferConsole.Mod.IPC
     /// <summary>
     /// Adds a message to the queue for send to the console.
     /// </summary>
-    public void SendMessage(PipeMessage message)
+    internal void SendMessage(PipeMessage message)
     {
       LogQueue.Enqueue(JsonConvert.SerializeObject(message, SerializerSettings));
       if (LogQueue.Count > MaxQueue)

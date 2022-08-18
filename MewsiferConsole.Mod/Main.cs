@@ -11,7 +11,7 @@ namespace MewsiferConsole.Mod
 {
   public static class Main
   {
-    public static ModLogger Logger;
+    internal static ModLogger Logger;
     private static Harmony Harmony;
 
     public static bool Load(ModEntry modEntry)

@@ -12,7 +12,7 @@ namespace MewsiferConsole.Mod.OwlcatLogging
   /// <summary>
   /// Forwards log events to MewsiferConsole using <see cref="Client"/>.
   /// </summary>
-  public class OwlcatLogSink : ILogSink
+  internal class OwlcatLogSink : ILogSink
   {
     public void Log(LogInfo logInfo)
     {
