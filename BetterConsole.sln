@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsole.Mod", "Better
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsole.Common", "BetterConsole.Common\BetterConsole.Common.csproj", "{DA2708B4-AC5B-4D8F-9758-93F576914E11}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoterConsole", "RemoterConsole\RemoterConsole.csproj", "{04FB96F3-AF86-4D6F-B357-3B5A866FF51D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DA2708B4-AC5B-4D8F-9758-93F576914E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA2708B4-AC5B-4D8F-9758-93F576914E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA2708B4-AC5B-4D8F-9758-93F576914E11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04FB96F3-AF86-4D6F-B357-3B5A866FF51D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04FB96F3-AF86-4D6F-B357-3B5A866FF51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04FB96F3-AF86-4D6F-B357-3B5A866FF51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04FB96F3-AF86-4D6F-B357-3B5A866FF51D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
