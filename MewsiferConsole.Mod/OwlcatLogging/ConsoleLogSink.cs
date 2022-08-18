@@ -53,7 +53,7 @@ namespace MewsiferConsole.Mod.OwlcatLogging
         OwlcatSeverity.Warning => MewsiferSeverity.Warning,
         OwlcatSeverity.Error => MewsiferSeverity.Error,
         OwlcatSeverity.Disabled => MewsiferSeverity.Verbose,
-        _ => throw new ArgumentOutOfRangeException($"Unknown Owlcat LogSeverity: {severity}");
+        _ => throw new ArgumentOutOfRangeException($"Unknown Owlcat LogSeverity: {severity}")
       };
     }
   }
