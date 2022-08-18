@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--
+			Enables the latest C# language features. Runtime features are limited by the .NET framework version, so some
+			features (e.g. Default Interfaces) are not available.
+		-->
+    <LangVersion>latest</LangVersion>
+    <!-- Latest .NET version supported by Wrath / Unity -->
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Wrath Assemblies -->
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(WrathPath)\Wrath_Data\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

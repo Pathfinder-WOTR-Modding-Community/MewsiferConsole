@@ -1,0 +1,10 @@
+﻿{
+  "Id": "BetterConsole.Mod",
+  "DisplayName": "BetterConsole",
+  "Author": "WittleWolfie",
+  "Version": "0.0.1",
+  "ManagerVersion": "0.21.3",
+  "AssemblyName": "BetterConsole.Mod.dll",
+  "EntryMethod": "BetterConsole.Mod.Main.Load",
+  "Requirements": []
+}
