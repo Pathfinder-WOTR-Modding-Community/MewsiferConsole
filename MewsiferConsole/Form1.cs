@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using MewsiferConsole.IPC;
 using static MewsiferConsole.Common.PipeContract;
 using Timer = System.Windows.Forms.Timer;
 
@@ -50,7 +51,7 @@ namespace MewsiferConsole
             dataGridView1.DataSource = filterView;
 
 
-            IPC.Instance.ConsumeAll(msg =>
+            Server.Instance.ConsumeAll(msg =>
             {
                 lock (queueLock)
                 {

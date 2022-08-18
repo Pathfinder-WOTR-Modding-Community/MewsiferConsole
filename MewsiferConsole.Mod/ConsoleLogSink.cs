@@ -1,5 +1,4 @@
 ﻿using MewsiferConsole.Mod.IPC;
-using Kingmaker.Utility;
 using Owlcat.Runtime.Core.Logging;
 using System.Collections.Generic;
 using System.Linq;
