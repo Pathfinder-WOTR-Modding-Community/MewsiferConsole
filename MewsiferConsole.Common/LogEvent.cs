@@ -44,7 +44,7 @@ namespace MewsiferConsole.Common
     /// <summary>
     /// <list type="bullet">
     /// <item>
-    /// Owlcat: <c>LogChannel.Verbose()</c> 
+    /// Owlcat: Unsupported.
     /// </item>
     /// <item>
     /// UMM: <c>ModLogger.NativeLog()</c>

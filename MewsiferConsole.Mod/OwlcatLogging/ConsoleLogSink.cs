@@ -21,9 +21,16 @@ namespace MewsiferConsole.Mod.OwlcatLogging
 
     public void Log(LogInfo logInfo)
     {
-      if (!string.IsNullOrEmpty(logInfo?.Message))
+      try
       {
-        Client.Instance.SendMessage(CreatePipeMessage(logInfo));
+        if (!string.IsNullOrEmpty(logInfo?.Message) && logInfo.Severity != OwlcatSeverity.Disabled)
+        {
+          Client.Instance.SendMessage(CreatePipeMessage(logInfo));
+        }
+      }
+      catch (Exception e)
+      {
+        Main.Logger.LogException("Failed to process log.", e);
       }
     }
 
@@ -52,8 +59,7 @@ namespace MewsiferConsole.Mod.OwlcatLogging
         OwlcatSeverity.Message => MewsiferSeverity.Info,
         OwlcatSeverity.Warning => MewsiferSeverity.Warning,
         OwlcatSeverity.Error => MewsiferSeverity.Error,
-        OwlcatSeverity.Disabled => MewsiferSeverity.Verbose,
-        _ => throw new ArgumentOutOfRangeException($"Unknown Owlcat LogSeverity: {severity}")
+        _ => throw new ArgumentOutOfRangeException($"Unsupported Owlcat LogSeverity: {severity}")
       };
     }
   }
