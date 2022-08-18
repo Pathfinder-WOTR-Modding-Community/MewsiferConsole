@@ -81,7 +81,8 @@ namespace BetterConsole.Mod.IPC
         {
           Stream?.Dispose();
           Main.Logger.Log("Connecting to BetterConsole.");
-          Stream = new(PipeName);
+          Main.Logger.Log($"Connecting to BetterConsole: {PipeName}");
+          Stream = new(".", PipeName, PipeDirection.Out);
           Stream.Connect();
           Main.Logger.Log("Connection established.");
 

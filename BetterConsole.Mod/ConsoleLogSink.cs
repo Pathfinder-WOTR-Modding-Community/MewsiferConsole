@@ -2,6 +2,7 @@
 using Kingmaker.Utility;
 using Owlcat.Runtime.Core.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using static BetterConsole.Common.PipeContract;
 
 namespace BetterConsole.Mod
