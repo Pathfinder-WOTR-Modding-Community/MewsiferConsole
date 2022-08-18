@@ -72,7 +72,7 @@ namespace MewsiferConsole.Common
     public readonly List<string> StackTrace;
 
     [JsonConstructor]
-    internal LogEvent(LogSeverity severity, string channel, string message, List<string> stackTrace = null)
+    public LogEvent(LogSeverity severity, string channel, string message, List<string> stackTrace = null)
     {
       Severity = severity;
       Channel = channel;

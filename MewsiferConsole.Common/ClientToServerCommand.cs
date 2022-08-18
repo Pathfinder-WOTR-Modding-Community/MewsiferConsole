@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace MewsiferConsole.Common
 {
@@ -11,7 +12,7 @@ namespace MewsiferConsole.Common
     public readonly ConnectionTest ConnectionTest;
 
     [JsonProperty]
-    public readonly CaptureBugReport CaptureBugReport;
+    public readonly VersionCheck VersionCheck;
 
     public static ClientToServerCommand TestConnection()
     {
@@ -19,9 +20,10 @@ namespace MewsiferConsole.Common
     }
 
     [JsonConstructor]
-    private ClientToServerCommand(CaptureBugReport bugReport = null, ConnectionTest connectionTest = null)
+    internal ClientToServerCommand(ConnectionTest connectionTest = null, VersionCheck versionCheck = null)
     {
       ConnectionTest = connectionTest;
+      VersionCheck = versionCheck;
     }
   }
 
@@ -31,8 +33,15 @@ namespace MewsiferConsole.Common
   /// </summary>
   public class ConnectionTest { }
 
-  public class CaptureBugReport
+  /// <summary>
+  /// Intro command to indicate which version of the contract the client uses.
+  /// </summary>
+  public class VersionCheck
   {
+    [JsonProperty]
+    public readonly string Version = PipeContract.ContractVersion;
 
+    [JsonConstructor]
+    internal VersionCheck() { }
   }
 }

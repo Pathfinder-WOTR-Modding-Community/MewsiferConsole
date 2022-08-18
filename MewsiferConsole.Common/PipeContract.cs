@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace MewsiferConsole.Common
 {
@@ -9,6 +8,9 @@ namespace MewsiferConsole.Common
   public class PipeContract
   {
     public const string PipeName = "MewsiferConsole.Pipe";
+
+    public const string ContractVersion = "1.0";
+    public static readonly PipeMessage VersionCheck = PipeMessage.ForServerCommand(new(versionCheck: new()));
 
     /// <summary>
     /// Messages sent across the pipe. Serialized/deserialized using JSON.
@@ -31,10 +33,9 @@ namespace MewsiferConsole.Common
         return new PipeMessage(serverCommand: serverCommand);
       }
 
-      public static PipeMessage ForLogEvent(
-        LogSeverity severity, string channel, string message, List<string> stackTrace = null)
+      public static PipeMessage ForLogEvent(LogEvent logEvent)
       {
-        return new PipeMessage(logEvent: new(severity, channel, message, stackTrace));
+        return new PipeMessage(logEvent: logEvent);
       }
 
       [JsonConstructor]
