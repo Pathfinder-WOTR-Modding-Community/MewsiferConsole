@@ -1,5 +1,4 @@
-﻿using MewsiferConsole.Common;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.IO.Pipes;
 using static MewsiferConsole.Common.PipeContract;
 
