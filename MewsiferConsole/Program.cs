@@ -13,8 +13,6 @@ namespace MewsiferConsole
       ApplicationConfiguration.Initialize();
 
       App.Install();
-
-      Application.Run(new MewsiferConsole());
     }
   }
 }
