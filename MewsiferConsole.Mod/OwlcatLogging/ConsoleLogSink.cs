@@ -7,10 +7,10 @@ using static MewsiferConsole.Common.PipeContract;
 using MewsiferSeverity = MewsiferConsole.Common.LogSeverity;
 using OwlcatSeverity = Owlcat.Runtime.Core.Logging.LogSeverity;
 
-namespace MewsiferConsole.Mod
+namespace MewsiferConsole.Mod.OwlcatLogging
 {
   /// <summary>
-  /// Forwards log events to MewsiferConsole using <see cref="IPC.Client"/>.
+  /// Forwards log events to MewsiferConsole using <see cref="Client"/>.
   /// </summary>
   public class ConsoleLogSink : ILogSink
   {
@@ -47,18 +47,14 @@ namespace MewsiferConsole.Mod
 
     private static MewsiferSeverity GetSeverity(OwlcatSeverity severity)
     {
-      switch (severity)
+      return severity switch
       {
-        case OwlcatSeverity.Message:
-          return MewsiferSeverity.Info;
-        case OwlcatSeverity.Warning:
-          return MewsiferSeverity.Warning;
-        case OwlcatSeverity.Error:
-          return MewsiferSeverity.Error;
-        case OwlcatSeverity.Disabled:
-          return MewsiferSeverity.Verbose;
-      }
-      throw new ArgumentOutOfRangeException($"Unknown Owlcat LogSeverity: {severity}");
+        OwlcatSeverity.Message => MewsiferSeverity.Info,
+        OwlcatSeverity.Warning => MewsiferSeverity.Warning,
+        OwlcatSeverity.Error => MewsiferSeverity.Error,
+        OwlcatSeverity.Disabled => MewsiferSeverity.Verbose,
+        _ => throw new ArgumentOutOfRangeException($"Unknown Owlcat LogSeverity: {severity}");
+      };
     }
   }
 }
