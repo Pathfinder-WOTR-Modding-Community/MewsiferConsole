@@ -12,8 +12,8 @@
     <!-- Needed to use publicized assembly -->
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-    <AssemblyName>BetterConsole.Mod</AssemblyName>
-    <RootNamespace>BetterConsole.Mod</RootNamespace>
+    <AssemblyName>MewsiferConsole.Mod</AssemblyName>
+    <RootNamespace>MewsiferConsole.Mod</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BetterConsole.Common\MewsiferConsole.Common.csproj" />
+    <ProjectReference Include="..\MewsiferConsole.Common\MewsiferConsole.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,7 +78,7 @@
   <Target Name="Deploy" AfterTargets="Build">
     <ItemGroup>
       <Assembly Include="$(OutputPath)\$(AssemblyName).dll" />
-      <Common Include="$(OutputPath)\BetterConsole.Common.dll" />
+      <Common Include="$(OutputPath)\MewsiferConsole.Common.dll" />
       <ModConfig Include="$(OutputPath)\Info.json" />
     </ItemGroup>
 
