@@ -6,12 +6,12 @@ using System.IO;
 using System.IO.Pipes;
 using System.Linq;
 using System.Threading;
-using static BetterConsole.Common.PipeContract;
+using static MewsiferConsole.Common.PipeContract;
 
-namespace BetterConsole.Mod.IPC
+namespace MewsiferConsole.Mod.IPC
 {
   /// <summary>
-  /// Client for BetterConsole. Forwards log messages to BetterConsole.
+  /// Client for MewsiferConsole. Forwards log messages to MewsiferConsole.
   /// </summary>
   /// 
   /// <remarks>
@@ -80,8 +80,8 @@ namespace BetterConsole.Mod.IPC
         try
         {
           Stream?.Dispose();
-          Main.Logger.Log("Connecting to BetterConsole.");
-          Main.Logger.Log($"Connecting to BetterConsole: {PipeName}");
+          Main.Logger.Log("Connecting to MewsiferConsole.");
+          Main.Logger.Log($"Connecting to MewsiferConsole: {PipeName}");
           Stream = new(".", PipeName, PipeDirection.Out);
           Stream.Connect();
           Main.Logger.Log("Connection established.");
@@ -95,12 +95,12 @@ namespace BetterConsole.Mod.IPC
         }
         catch (IOException)
         {
-          Main.Logger.Log("BetterConsole died, waiting for its return.");
+          Main.Logger.Log("MewsiferConsole died, waiting for its return.");
           Thread.Sleep(10000);
         }
         catch (Exception e)
         {
-          Main.Logger.LogException("Error while connecting to BetterConsole.", e);
+          Main.Logger.LogException("Error while connecting to MewsiferConsole.", e);
           break;
         }
       }

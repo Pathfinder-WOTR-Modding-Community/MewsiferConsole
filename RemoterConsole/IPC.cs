@@ -1,10 +1,10 @@
-﻿using BetterConsole.Common;
+﻿using MewsiferConsole.Common;
 using Newtonsoft.Json;
 using System.Buffers;
 using System.IO.Pipes;
-using static BetterConsole.Common.PipeContract;
+using static MewsiferConsole.Common.PipeContract;
 
-namespace RemoterConsole
+namespace MewsiferConsole
 {
     internal class IPC
     {

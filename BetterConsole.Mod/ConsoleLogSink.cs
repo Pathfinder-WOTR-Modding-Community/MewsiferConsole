@@ -1,14 +1,14 @@
-﻿using BetterConsole.Mod.IPC;
+﻿using MewsiferConsole.Mod.IPC;
 using Kingmaker.Utility;
 using Owlcat.Runtime.Core.Logging;
 using System.Collections.Generic;
 using System.Linq;
-using static BetterConsole.Common.PipeContract;
+using static MewsiferConsole.Common.PipeContract;
 
-namespace BetterConsole.Mod
+namespace MewsiferConsole.Mod
 {
   /// <summary>
-  /// Forwards log events to BetterConsole using <see cref="IPC.Client"/>.
+  /// Forwards log events to MewsiferConsole using <see cref="IPC.Client"/>.
   /// </summary>
   public class ConsoleLogSink : ILogSink
   {

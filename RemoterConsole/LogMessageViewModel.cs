@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static BetterConsole.Common.PipeContract;
+﻿using System.ComponentModel;
+using static MewsiferConsole.Common.PipeContract;
 
-namespace RemoterConsole
+namespace MewsiferConsole
 {
     internal class LogMessageViewModel : INotifyPropertyChanged
     {

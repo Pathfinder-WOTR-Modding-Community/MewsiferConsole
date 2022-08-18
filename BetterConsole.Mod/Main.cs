@@ -2,7 +2,7 @@
 using static UnityModManagerNet.UnityModManager;
 using static UnityModManagerNet.UnityModManager.ModEntry;
 
-namespace BetterConsole.Mod
+namespace MewsiferConsole.Mod
 {
   public static class Main
   {

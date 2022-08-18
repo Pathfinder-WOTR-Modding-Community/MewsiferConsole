@@ -1,4 +1,4 @@
-namespace RemoterConsole
+namespace MewsiferConsole
 {
     internal static class Program
     {

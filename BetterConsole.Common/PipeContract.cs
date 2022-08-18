@@ -1,14 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace BetterConsole.Common
+namespace MewsiferConsole.Common
 {
   /// <summary>
-  /// API for pipe IPC between BetterConsole and BetterConsole.Mod.
+  /// API for pipe IPC between MewsiferConsole and MewsiferConsole.Mod.
   /// </summary>
   public class PipeContract
   {
-    public const string PipeName = "BetterConsole.Pipe";
+    public const string PipeName = "MewsiferConsole.Pipe";
 
     /// <summary>
     /// Struct with log message details. Used to serialize/deserialize JSON.

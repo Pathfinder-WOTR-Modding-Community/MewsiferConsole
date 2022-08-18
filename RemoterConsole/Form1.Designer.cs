@@ -1,4 +1,4 @@
-﻿namespace RemoterConsole
+﻿namespace MewsiferConsole
 {
     partial class Form1
     {

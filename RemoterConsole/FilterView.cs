@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace RemoterConsole
+namespace MewsiferConsole
 {
     internal class LogMessageFilterView : IBindingListView, ITypedList
     {

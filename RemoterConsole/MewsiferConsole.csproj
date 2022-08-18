@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BetterConsole.Common\BetterConsole.Common.csproj" />
+    <ProjectReference Include="..\BetterConsole.Common\MewsiferConsole.Common.csproj" />
   </ItemGroup>
 
 </Project>

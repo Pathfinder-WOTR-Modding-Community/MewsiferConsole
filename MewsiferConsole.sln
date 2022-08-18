@@ -9,11 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsole.Mod", "BetterConsole.Mod\BetterConsole.Mod.csproj", "{F24A6592-BB78-4F70-A8FD-321EDB1E9A54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MewsiferConsole.Mod", "BetterConsole.Mod\MewsiferConsole.Mod.csproj", "{F24A6592-BB78-4F70-A8FD-321EDB1E9A54}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterConsole.Common", "BetterConsole.Common\BetterConsole.Common.csproj", "{DA2708B4-AC5B-4D8F-9758-93F576914E11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MewsiferConsole.Common", "BetterConsole.Common\MewsiferConsole.Common.csproj", "{DA2708B4-AC5B-4D8F-9758-93F576914E11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoterConsole", "RemoterConsole\RemoterConsole.csproj", "{04FB96F3-AF86-4D6F-B357-3B5A866FF51D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MewsiferConsole", "RemoterConsole\MewsiferConsole.csproj", "{04FB96F3-AF86-4D6F-B357-3B5A866FF51D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

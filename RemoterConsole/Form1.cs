@@ -1,9 +1,8 @@
 using System.ComponentModel;
-using System.Text.RegularExpressions;
-using static BetterConsole.Common.PipeContract;
+using static MewsiferConsole.Common.PipeContract;
 using Timer = System.Windows.Forms.Timer;
 
-namespace RemoterConsole
+namespace MewsiferConsole
 {
     public partial class Form1 : Form
     {
