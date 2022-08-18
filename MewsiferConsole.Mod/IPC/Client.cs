@@ -24,8 +24,14 @@ namespace MewsiferConsole.Mod.IPC
     private static Client _instance;
     public static Client Instance => _instance ??= new();
 
+    private static readonly JsonSerializerSettings SerializerSettings =
+      new()
+      {
+        NullValueHandling = NullValueHandling.Ignore,
+      };
+
     private bool Enabled;
-    private NamedPipeClientStream Stream;
+    private NamedPipeClientStream Stream; 
     private Thread Thread;
     // Queue of LogMessage serialized to Json
     private readonly ConcurrentQueue<string> LogQueue = new();
@@ -47,7 +53,7 @@ namespace MewsiferConsole.Mod.IPC
     /// </summary>
     public void SendMessage(PipeMessage message)
     {
-      LogQueue.Enqueue(JsonConvert.SerializeObject(message));
+      LogQueue.Enqueue(JsonConvert.SerializeObject(message, SerializerSettings));
       if (LogQueue.Count > MaxQueue)
       {
         LogQueue.TryDequeue(out _);
@@ -115,6 +121,7 @@ namespace MewsiferConsole.Mod.IPC
           TestConnection(writer);
           if (LogQueue.Any() && LogQueue.TryDequeue(out string message))
           {
+            Main.Logger.NativeLog(message);
             writer.Write(message);
             writer.Flush();
           }
@@ -128,7 +135,9 @@ namespace MewsiferConsole.Mod.IPC
     }
 
     private static readonly string ConnectionTest =
-      JsonConvert.SerializeObject(PipeMessage.ForServerCommand(ClientToServerCommand.TestConnection()));
+      JsonConvert.SerializeObject(
+        PipeMessage.ForServerCommand(ClientToServerCommand.TestConnection()),
+        SerializerSettings);
     private void TestConnection(BinaryWriter writer)
     {
       writer.Write(ConnectionTest);
