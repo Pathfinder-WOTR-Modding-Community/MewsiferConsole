@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MewsiferConsole.Common;
+using Newtonsoft.Json;
 using System.IO.Pipes;
 using static MewsiferConsole.Common.PipeContract;
 
@@ -13,7 +14,7 @@ namespace MewsiferConsole.IPC
     private static Server? _Instance;
     public static Server Instance => _Instance ??= new();
 
-    public void ConsumeAll(Action<LogMessage> callback)
+    public void ConsumeAll(Action<PipeMessage> callback)
     {
       Task.Run(() =>
       {
@@ -29,7 +30,7 @@ namespace MewsiferConsole.IPC
             try
             {
               var raw = Reader.ReadString();
-              callback(JsonConvert.DeserializeObject<LogMessage>(raw));
+              callback(JsonConvert.DeserializeObject<PipeMessage>(raw));
             }
             catch (Exception ex)
             {

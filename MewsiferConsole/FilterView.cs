@@ -6,14 +6,14 @@ namespace MewsiferConsole
 {
   internal class LogMessageFilterView : IBindingListView, ITypedList
   {
-    private readonly BindingList<LogMessageViewModel> ViewModel;
+    private readonly BindingList<LogEventViewModel> ViewModel;
     private readonly List<int> Remap = new();
     private readonly Dictionary<int, int> Reverse = new();
-    private PropertyDescriptorCollection Properties;
+    private readonly PropertyDescriptorCollection Properties;
 
     private void TryFilter(int index, bool raiseEvent)
     {
-      LogMessageViewModel model = ViewModel[index];
+      LogEventViewModel model = ViewModel[index];
 
       bool channelMatch =
         filterChannel.Length == 0 || model.ChannelName.Contains(filterChannel, StringComparison.OrdinalIgnoreCase);
@@ -33,7 +33,7 @@ namespace MewsiferConsole
       }
     }
 
-    public LogMessageFilterView(BindingList<LogMessageViewModel> underlying)
+    public LogMessageFilterView(BindingList<LogEventViewModel> underlying)
     {
       this.ViewModel = underlying;
       this.ViewModel.ListChanged += (obj, evt) =>
@@ -62,7 +62,7 @@ namespace MewsiferConsole
       // Get the 'shape' of the list.
       // Only get the public properties marked with Browsable = true.
       PropertyDescriptorCollection pdc = TypeDescriptor.GetProperties(
-        typeof(LogMessageViewModel),
+        typeof(LogEventViewModel),
         new Attribute[] { new BrowsableAttribute(true) });
 
       // Sort the properties.
@@ -224,7 +224,7 @@ namespace MewsiferConsole
 
     public string GetListName(PropertyDescriptor[] listAccessors)
     {
-      return typeof(LogMessageViewModel).Name;
+      return typeof(LogEventViewModel).Name;
     }
 
     private void ApplyFilter(string text)

@@ -11,25 +11,48 @@ namespace MewsiferConsole.Common
     public const string PipeName = "MewsiferConsole.Pipe";
 
     /// <summary>
-    /// Struct with log message details. Used to serialize/deserialize JSON.
+    /// Messages sent across the pipe. Serialized/deserialized using JSON.
     /// </summary>
-    public struct LogMessage
+    /// 
+    /// <remarks>
+    /// All fields should be marked with [JsonProperty] and readonly. This ensures serialize/deserialize works and
+    /// these should be immutable objects.
+    /// </remarks>
+    public class PipeMessage
     {
       [JsonProperty]
-      public bool Control;
+      public readonly ClientToServerCommand ServerCommand;
 
       [JsonProperty]
-      public string Timestamp;
+      public readonly LogEvent LogEvent;
 
-      [JsonProperty]
-      public string Severity;
+      public static PipeMessage ForServerCommand(ClientToServerCommand serverCommand)
+      {
+        return new PipeMessage(serverCommand);
+      }
 
-      [JsonProperty]
-      public string ChannelName;
+      private PipeMessage(ClientToServerCommand serverCommand)
+      {
+        ServerCommand = serverCommand;
+      }
 
+      public static PipeMessage ForLogEvent(
+        LogSeverity severity, string channel, string message, List<string> stackTrace = null)
+      {
+        return new PipeMessage(new LogEvent(severity, channel, message, stackTrace));
+      }
 
-      [JsonProperty]
-      public List<string> Message;
+      private PipeMessage(LogEvent logEvent)
+      {
+        LogEvent = logEvent;
+      }
+
+      [JsonConstructor]
+      private PipeMessage(ClientToServerCommand serverCommand, LogEvent logEvent)
+      {
+        ServerCommand = serverCommand;
+        LogEvent = logEvent;
+      }
     }
   }
 }

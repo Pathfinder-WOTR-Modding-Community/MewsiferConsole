@@ -1,28 +1,23 @@
-﻿using System.ComponentModel;
-using static MewsiferConsole.Common.PipeContract;
+﻿using MewsiferConsole.Common;
+using System.ComponentModel;
 
 namespace MewsiferConsole
 {
-  internal class LogMessageViewModel : INotifyPropertyChanged
+  internal class LogEventViewModel : INotifyPropertyChanged
   {
-    public readonly LogMessage Model;
+    public readonly LogEvent Model;
 
-    public LogMessageViewModel(LogMessage model)
+    public LogEventViewModel(LogEvent model)
     {
       Model = model;
     }
 
-    public string ChannelName => Model.ChannelName;
-    public string Message => BuildMessage(Model);
+    public string ChannelName => Model.Channel;
+    public string Message => Model.Message;
 
-    private static string BuildMessage(LogMessage model)
+    internal bool MergesWith(LogEvent evt)
     {
-      return model.Message.Count > 0 ? model.Message[0] : "-";
-    }
-
-    internal bool MergesWith(LogMessage msg)
-    {
-      return msg.ChannelName == Model.ChannelName && BuildMessage(msg) == Message;
+      return evt.Channel == Model.Channel && evt.Message == Message;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

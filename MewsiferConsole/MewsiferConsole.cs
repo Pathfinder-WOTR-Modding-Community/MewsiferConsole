@@ -1,6 +1,6 @@
 using System.ComponentModel;
+using MewsiferConsole.Common;
 using MewsiferConsole.IPC;
-using static MewsiferConsole.Common.PipeContract;
 using Timer = System.Windows.Forms.Timer;
 
 namespace MewsiferConsole
@@ -8,11 +8,11 @@ namespace MewsiferConsole
   public partial class MewsiferConsole : Form
   {
     private readonly BindingSource BindingSource;
-    private readonly BindingList<LogMessageViewModel> Messages;
+    private readonly BindingList<LogEventViewModel> Messages;
     private readonly LogMessageFilterView FilterView;
 
     private readonly object QueueLock = new();
-    private readonly List<LogMessage>[] Queues = { new(), new() };
+    private readonly List<LogEvent>[] Queues = { new(), new() };
     private int IncomingIndex = 0;
 
     private readonly Timer Timer;
@@ -50,9 +50,12 @@ namespace MewsiferConsole
 
       Server.Instance.ConsumeAll(msg =>
       {
-        lock (QueueLock)
+        if (msg.LogEvent is not null)
         {
-          Queues[IncomingIndex].Add(msg);
+          lock (QueueLock)
+          {
+            Queues[IncomingIndex].Add(msg.LogEvent);
+          }
         }
       });
 
@@ -79,7 +82,7 @@ namespace MewsiferConsole
 
       Timer.Tick += (obj, evt) =>
       {
-        List<LogMessage> toProcess;
+        List<LogEvent> toProcess;
         lock(QueueLock)
         {
           toProcess = Queues[IncomingIndex];
@@ -88,18 +91,17 @@ namespace MewsiferConsole
 
         //messages.RaiseListChangedEvents = false;
         int addCount = 0;
-        foreach (var rawMessage in toProcess)
+        foreach (var rawEvent in toProcess)
         {
-          if (rawMessage.Control) { continue; }
-          LogMessageViewModel? prev = Messages.Count > 0 ? Messages.Last() : null;
+          LogEventViewModel? prev = Messages.Count > 0 ? Messages.Last() : null;
 
-          if (prev?.MergesWith(rawMessage) == true)
+          if (prev?.MergesWith(rawEvent) == true)
           {
             prev.MergedCount++;
           }
           else
           {
-            LogMessageViewModel newMessage = new(rawMessage);
+            LogEventViewModel newMessage = new(rawEvent);
             Messages.Add(newMessage);
 
             AddIndex(IndexRowLookup, newMessage.Message, Messages.Count);

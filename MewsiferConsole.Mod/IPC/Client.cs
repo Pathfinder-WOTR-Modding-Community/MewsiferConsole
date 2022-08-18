@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MewsiferConsole.Common;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.ComponentModel;
@@ -13,18 +14,12 @@ namespace MewsiferConsole.Mod.IPC
   /// <summary>
   /// Client for MewsiferConsole. Forwards log messages to MewsiferConsole.
   /// </summary>
-  /// 
-  /// <remarks>
-  /// Originally I tried to use H.Pipes which provides a wrapper for easier use. Unfortunately it is built entirely
-  /// on async pipes which is not supported in Unity. Now it's using RawPipes though converting to JSON would be easy
-  /// if needed.
-  /// </remarks>
   public class Client : IDisposable
   {
     /// <summary>
     /// Max log lines in the queue after which they will be discarded.
     /// </summary>
-    private const int MaxQueue = 250;
+    private const int MaxQueue = 100000;
 
     private static Client _instance;
     public static Client Instance => _instance ??= new();
@@ -48,9 +43,9 @@ namespace MewsiferConsole.Mod.IPC
     }
 
     /// <summary>
-    /// Reports a log message which is added to the queue for send.
+    /// Adds a message to the queue for send to the console.
     /// </summary>
-    public void ReportLog(LogMessage message)
+    public void SendMessage(PipeMessage message)
     {
       LogQueue.Enqueue(JsonConvert.SerializeObject(message));
       if (LogQueue.Count > MaxQueue)
@@ -132,10 +127,11 @@ namespace MewsiferConsole.Mod.IPC
       }
     }
 
-    private static readonly string TestMessage =  JsonConvert.SerializeObject(new LogMessage() { Control = true });
+    private static readonly string ConnectionTest =
+      JsonConvert.SerializeObject(PipeMessage.ForServerCommand(ClientToServerCommand.TestConnection()));
     private void TestConnection(BinaryWriter writer)
     {
-      writer.Write(TestMessage);
+      writer.Write(ConnectionTest);
       writer.Flush();
     }
   }
