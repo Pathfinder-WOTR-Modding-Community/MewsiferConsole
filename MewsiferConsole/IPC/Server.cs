@@ -6,19 +6,12 @@ namespace MewsiferConsole.IPC
 {
   internal class Server
   {
-    private readonly NamedPipeServerStream Pipe;
-    private readonly BinaryReader Reader;
+    private NamedPipeServerStream? Pipe;
+    private BinaryReader? Reader;
     private bool Enabled = true; 
 
     private static Server? _Instance;
     public static Server Instance => _Instance ??= new();
-
-    public Server()
-    {
-      Console.WriteLine("Creating pipe with name: " + PipeName);
-      Pipe = new(PipeName, PipeDirection.In, 2, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
-      Reader = new(Pipe);
-    }
 
     public void ConsumeAll(Action<LogMessage> callback)
     {
@@ -26,6 +19,9 @@ namespace MewsiferConsole.IPC
       {
         while (Enabled)
         {
+          Console.WriteLine("Creating pipe with name: " + PipeName);
+          Pipe = new(PipeName, PipeDirection.In, 2, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+          Reader = new(Pipe);
           Pipe.WaitForConnection();
 
           while (Pipe.IsConnected)
@@ -40,6 +36,9 @@ namespace MewsiferConsole.IPC
               Console.WriteLine(ex.Message);
             }
           }
+
+          Reader.Dispose();
+          Pipe.Dispose();
         }
       });
     }
