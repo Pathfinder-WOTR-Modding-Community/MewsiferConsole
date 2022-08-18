@@ -6,14 +6,14 @@ namespace MewsiferConsole
 {
   internal class LogMessageFilterView : IBindingListView, ITypedList
   {
-    private readonly BindingList<LogMessageViewModel> underlying;
-    private readonly List<int> remap = new();
-    private readonly Dictionary<int, int> reverse = new();
-    private PropertyDescriptorCollection properties;
+    private readonly BindingList<LogMessageViewModel> ViewModel;
+    private readonly List<int> Remap = new();
+    private readonly Dictionary<int, int> Reverse = new();
+    private PropertyDescriptorCollection Properties;
 
     private void TryFilter(int index, bool raiseEvent)
     {
-      LogMessageViewModel model = underlying[index];
+      LogMessageViewModel model = ViewModel[index];
 
       bool channelMatch =
         filterChannel.Length == 0 || model.ChannelName.Contains(filterChannel, StringComparison.OrdinalIgnoreCase);
@@ -22,9 +22,9 @@ namespace MewsiferConsole
 
       if (rawMatch && channelMatch)
       {
-        int remappedIndex = remap.Count;
-        remap.Add(index);
-        reverse[index] = remappedIndex;
+        int remappedIndex = Remap.Count;
+        Remap.Add(index);
+        Reverse[index] = remappedIndex;
 
         if (raiseEvent)
         {
@@ -35,8 +35,8 @@ namespace MewsiferConsole
 
     public LogMessageFilterView(BindingList<LogMessageViewModel> underlying)
     {
-      this.underlying = underlying;
-      this.underlying.ListChanged += (obj, evt) =>
+      this.ViewModel = underlying;
+      this.ViewModel.ListChanged += (obj, evt) =>
       {
         if (evt.ListChangedType == ListChangedType.ItemAdded)
         {
@@ -49,7 +49,7 @@ namespace MewsiferConsole
         }
         else if (evt.ListChangedType == ListChangedType.ItemChanged)
         {
-          if (reverse.TryGetValue(evt.NewIndex, out var index))
+          if (Reverse.TryGetValue(evt.NewIndex, out var index))
           {
             ListChanged?.Invoke(this, new(ListChangedType.ItemChanged, index));
           }
@@ -66,14 +66,14 @@ namespace MewsiferConsole
         new Attribute[] { new BrowsableAttribute(true) });
 
       // Sort the properties.
-      properties = pdc.Sort();
+      Properties = pdc.Sort();
     }
 
     public object? this[int index]
     {
       get
       {
-        var obj = underlying[remap[index]];
+        var obj = ViewModel[Remap[index]];
         return obj;
       }
       set
@@ -112,7 +112,7 @@ namespace MewsiferConsole
     public bool SupportsSorting => false;
     public bool IsFixedSize => false;
     public bool IsReadOnly => true;
-    public int Count => remap.Count;
+    public int Count => Remap.Count;
 
     public bool IsSynchronized => throw new NotImplementedException();
     public object SyncRoot => throw new NotImplementedException();
@@ -216,7 +216,7 @@ namespace MewsiferConsole
       else
       {
         // Return properties in sort order.
-        pdc = properties;
+        pdc = Properties;
       }
 
       return pdc;
@@ -265,11 +265,11 @@ namespace MewsiferConsole
       filterChannel = newFilterChannel;
       rawTerms = newTerms;
 
-      remap.Clear();
-      reverse.Clear();
+      Remap.Clear();
+      Reverse.Clear();
       _Filter = text;
 
-      for (int i = 0; i < underlying.Count; i++)
+      for (int i = 0; i < ViewModel.Count; i++)
       {
         TryFilter(i, false);
       }
