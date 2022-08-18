@@ -14,7 +14,7 @@ namespace MewsiferConsole
 
       App.Install();
 
-      Application.Run(new Form1());
+      Application.Run(new MewsiferConsole());
     }
   }
 }

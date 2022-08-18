@@ -5,7 +5,7 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace MewsiferConsole
 {
-    public partial class Form1 : Form
+    public partial class MewsiferConsole : Form
     {
         private readonly BindingSource bindingSource;
         private readonly BindingList<LogMessageViewModel> messages;
@@ -39,7 +39,7 @@ namespace MewsiferConsole
         private readonly Dictionary<string, List<int>> indexRowLookup = new();
         private readonly Dictionary<string, List<int>> byChannel = new();
 
-        public Form1()
+        public MewsiferConsole()
         {
             InitializeComponent();
             bindingSource = new();
