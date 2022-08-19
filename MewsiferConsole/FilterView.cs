@@ -61,8 +61,8 @@ namespace MewsiferConsole
     /// <param name="underlying">The underlying model to filter</param>
     public LogMessageFilterView(BindingList<LogEventViewModel> underlying)
     {
-      this.ViewModel = underlying;
-      this.ViewModel.ListChanged += (obj, evt) =>
+      ViewModel = underlying;
+      ViewModel.ListChanged += (obj, evt) =>
       {
         if (evt.ListChangedType == ListChangedType.ItemAdded)
         {
