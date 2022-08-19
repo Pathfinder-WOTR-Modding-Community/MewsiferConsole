@@ -155,7 +155,8 @@ namespace MewsiferConsole
     {
       TitleChanged?.Invoke("local file - " + path);
 
-      foreach (var line in File.ReadLines(path))
+      var decompressedFile = MewFile.Read(path);
+      foreach (var line in File.ReadLines(decompressedFile))
       {
         RawMessage?.Invoke(line);
       }

@@ -11,7 +11,8 @@
     {
       var dialog = new OpenFileDialog
       {
-        CheckFileExists = true
+        CheckFileExists = true,
+        Filter = "mew files (*.mew)|*.mew"
       };
 
       var result = dialog.ShowDialog(this);
