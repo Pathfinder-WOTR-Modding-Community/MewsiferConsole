@@ -28,6 +28,7 @@ namespace MewsiferConsole.Mod.IPC
       new()
       {
         NullValueHandling = NullValueHandling.Ignore,
+        PreserveReferencesHandling = PreserveReferencesHandling.None,
       };
 
     private bool Enabled;
