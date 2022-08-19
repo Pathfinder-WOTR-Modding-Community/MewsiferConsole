@@ -8,18 +8,19 @@ namespace MewsiferConsole.Mod
   public class Mewsifer
   {
     /// <summary>
-    /// Generates a report, capturing all of the log events and storing them on https://dpaste.org/.
+    /// Generates a report which captures all log events and can be opened using MewsiferConsole.
     /// </summary>
     /// 
     /// <remarks>
-    /// This is asynchronous as it may takes some time. It is not recommended to convert the result to a synchronous
+    /// This is an asynchronous that may take some time. It is not recommended to convert the result to a synchronous
     /// call unless you run it on your own thread.
     /// </remarks>
     /// 
-    /// <returns>The URL for the report, or empty if the request failed</returns>
-    public static async Task<string> GenerateReport()
+    /// <param name="reportFileName">Name used for the generated report file, without extension.</param>
+    /// <returns>The file path for the generated report.</returns>
+    public static async Task<string> GenerateReport(string reportFileName)
     {
-      return await DPasteClient.PostReport(Main.LogEventHandler.GetLogDump());
+      return await Main.LogEventHandler.GetLogDump(reportFileName);
     }
   }
 }

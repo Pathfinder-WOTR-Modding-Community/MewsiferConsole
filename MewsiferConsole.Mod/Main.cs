@@ -3,6 +3,7 @@ using MewsiferConsole.Mod.IPC;
 using MewsiferConsole.Mod.OwlcatLogging;
 using MewsiferConsole.Mod.UMMLogging;
 using System;
+using System.Threading;
 using static UnityModManagerNet.UnityModManager;
 using static UnityModManagerNet.UnityModManager.ModEntry;
 
@@ -34,7 +35,7 @@ namespace MewsiferConsole.Mod
         LogEventHandler.Init();
         Client.Instance.Initialize();
 
-        //new Thread(new ThreadStart(LogReport)).Start();
+        new Thread(new ThreadStart(LogReport)).Start();
         Logger.Log("Finished loading.");
       }
       catch (Exception e)
@@ -45,13 +46,13 @@ namespace MewsiferConsole.Mod
     }
 
     // Test code
-    //private static void LogReport()
-    //{
-    //  Thread.Sleep(30 * 1000);
-    //  var report = Mewsifer.GenerateReport();
-    //  report.Wait();
-    //  Main.Logger.Log($"Generated report: {report.Result}");
-    //}
+    private static void LogReport()
+    {
+      Thread.Sleep(30 * 1000);
+      var report = Mewsifer.GenerateReport("TestReport");
+      report.Wait();
+      Logger.Log($"Generated report: {report.Result}");
+    }
 
     private static bool OnUnload(ModEntry modEntry)
     {

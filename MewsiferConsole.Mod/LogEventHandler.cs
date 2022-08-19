@@ -2,9 +2,13 @@
 using MewsiferConsole.Mod.IPC;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using static MewsiferConsole.Common.PipeContract;
 
 namespace MewsiferConsole.Mod
@@ -69,9 +73,36 @@ namespace MewsiferConsole.Mod
       }
     }
 
-    internal string GetLogDump()
+    private void WriteToTempFile()
+    {
+      Main.Logger.Log($"Writing logs to file: {LogTempFile}");
+      using (var writer = new StreamWriter(LogTempFile, append: true))
+      {
+        var processedLogs = new HashSet<string>();
+        while (LogFileQueue.Any())
+        {
+          if (LogFileQueue.TryDequeue(out string message))
+          {
+            if (processedLogs.Add(message))
+            {
+              writer.WriteLine(message);
+            }
+          }
+        }
+      }
+      FileOpen = false;
+    }
+
+    internal async Task<string> GetLogDump(string fileName)
     {
       Main.Logger.Log("Log dump requested.");
+      var task = new Task<string>(() => GetLogDumpInternal(fileName));
+      task.Start();
+      return await task;
+    }
+
+    internal string GetLogDumpInternal(string fileName)
+    {
       if (FileOpen)
       {
         Main.Logger.NativeLog("Log file open, waiting.");
@@ -86,24 +117,13 @@ namespace MewsiferConsole.Mod
         FileOpen = true;
         WriteToTempFile();
       }
-      Main.Logger.Log("Retrieving log dump.");
-      return File.ReadAllText(LogTempFile);
-    }
 
-    private void WriteToTempFile()
-    {
-      Main.Logger.Log($"Writing logs to file: {LogTempFile}");
-      using (var writer = new StreamWriter(LogTempFile, append: true))
-      {
-        while (LogFileQueue.Any())
-        {
-          if (LogFileQueue.TryDequeue(out string message))
-          {
-            writer.WriteLine(message);
-          }
-        }
-      }
-      FileOpen = false;
+      // Just assume queue won't fill up in the time it takes to do this. Otherwise we'd need to check FileOpen and
+      // wait for the write thread again.
+      var filePath = Path.Combine(Path.GetTempPath(), $"{fileName}.mew");
+      Main.Logger.Log($"Writing compressed log file: {filePath}");
+      MewFile.Write(LogTempFile, filePath);
+      return filePath;
     }
   }
 }
