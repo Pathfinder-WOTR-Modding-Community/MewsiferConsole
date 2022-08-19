@@ -33,6 +33,8 @@ namespace MewsiferConsole.Mod
 
         LogEventHandler.Init();
         Client.Instance.Initialize();
+
+        //new Thread(new ThreadStart(LogReport)).Start();
         Logger.Log("Finished loading.");
       }
       catch (Exception e)
@@ -41,6 +43,15 @@ namespace MewsiferConsole.Mod
       }
       return true;
     }
+
+    // Test code
+    //private static void LogReport()
+    //{
+    //  Thread.Sleep(30 * 1000);
+    //  var report = Mewsifer.GenerateReport();
+    //  report.Wait();
+    //  Main.Logger.Log($"Generated report: {report.Result}");
+    //}
 
     private static bool OnUnload(ModEntry modEntry)
     {
