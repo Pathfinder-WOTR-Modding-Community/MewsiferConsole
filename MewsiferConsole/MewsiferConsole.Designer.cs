@@ -83,7 +83,7 @@
             this.Message});
       dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
       dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-      dataGridViewCellStyle4.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      dataGridViewCellStyle4.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
       dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
       dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
       dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -99,12 +99,13 @@
       this.dataGridView1.RowTemplate.Height = 33;
       this.dataGridView1.Size = new System.Drawing.Size(1532, 643);
       this.dataGridView1.TabIndex = 0;
-      this.dataGridView1.CellFormatting += DataGrid_CellFormatting;
+      this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
       // 
       // Severity
       // 
       this.Severity.DataPropertyName = "Severity";
       dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
       this.Severity.DefaultCellStyle = dataGridViewCellStyle3;
       this.Severity.HeaderText = "Level";
       this.Severity.MinimumWidth = 55;
@@ -155,10 +156,11 @@
       this.TailToggle.AutoSize = true;
       this.TailToggle.Checked = true;
       this.TailToggle.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.TailToggle.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
       this.TailToggle.Location = new System.Drawing.Point(1462, 2);
       this.TailToggle.Margin = new System.Windows.Forms.Padding(2);
       this.TailToggle.Name = "TailToggle";
-      this.TailToggle.Size = new System.Drawing.Size(40, 28);
+      this.TailToggle.Size = new System.Drawing.Size(38, 26);
       this.TailToggle.TabIndex = 0;
       this.TailToggle.Text = "Tail";
       this.TailToggle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -167,11 +169,11 @@
       // OmniFilter
       // 
       this.OmniFilter.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.OmniFilter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      this.OmniFilter.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
       this.OmniFilter.Location = new System.Drawing.Point(2, 2);
       this.OmniFilter.Margin = new System.Windows.Forms.Padding(2);
       this.OmniFilter.Name = "OmniFilter";
-      this.OmniFilter.Size = new System.Drawing.Size(1456, 29);
+      this.OmniFilter.Size = new System.Drawing.Size(1456, 23);
       this.OmniFilter.TabIndex = 1;
       // 
       // MewsiferConsole
@@ -199,8 +201,8 @@
         private TableLayoutPanel tableLayoutPanel2;
         private CheckBox TailToggle;
         private TextBox OmniFilter;
-    private DataGridViewTextBoxColumn Severity;
-    private DataGridViewTextBoxColumn ChannelName;
-    private DataGridViewTextBoxColumn Message;
-  }
+        private DataGridViewTextBoxColumn Severity;
+        private DataGridViewTextBoxColumn ChannelName;
+        private DataGridViewTextBoxColumn Message;
+    }
 }

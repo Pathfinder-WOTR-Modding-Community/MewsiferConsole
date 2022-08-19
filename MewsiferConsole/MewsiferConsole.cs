@@ -130,7 +130,7 @@ namespace MewsiferConsole
       else { index[key] = new() { row }; }
     }
 
-    private void DataGrid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+    private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
     {
       var dgv = sender as DataGridView;
       if (dgv.Columns["Severity"].Index == e.ColumnIndex)
