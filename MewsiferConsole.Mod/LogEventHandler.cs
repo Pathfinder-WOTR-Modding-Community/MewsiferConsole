@@ -2,12 +2,9 @@
 using MewsiferConsole.Mod.IPC;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using static MewsiferConsole.Common.PipeContract;
 
 namespace MewsiferConsole.Mod
@@ -35,6 +32,7 @@ namespace MewsiferConsole.Mod
     // Queue for dumping to the log file. Contains JSON serialized PipeMessage for each log event.
     private readonly ConcurrentQueue<string> LogFileQueue = new();
 
+    private Thread WriteToFileThread;
     private int _fileOpen = 0;
     private bool FileOpen
     {
@@ -46,7 +44,7 @@ namespace MewsiferConsole.Mod
       }
     }
 
-    public void Init()
+    internal void Init()
     {
       try
       {
@@ -66,8 +64,30 @@ namespace MewsiferConsole.Mod
       {
         FileOpen = true;
         // Write on another thread so it doesn't block the thread triggering log events from the game.
-        new Thread(new ThreadStart(WriteToTempFile)).Start();
+        WriteToFileThread = new Thread(new ThreadStart(WriteToTempFile));
+        WriteToFileThread.Start();
       }
+    }
+
+    internal string GetLogDump()
+    {
+      Main.Logger.Log("Log dump requested.");
+      if (FileOpen)
+      {
+        Main.Logger.NativeLog("Log file open, waiting.");
+        // Timeout after 30s since that's a really long time to write such a small file (max 2500 lines)
+        if (!WriteToFileThread.Join(30 * 1000))
+        {
+          throw new TimeoutException("Timed out waiting for the log file to be written.");
+        }
+      }
+      else
+      {
+        FileOpen = true;
+        WriteToTempFile();
+      }
+      Main.Logger.Log("Retrieving log dump.");
+      return File.ReadAllText(LogTempFile);
     }
 
     private void WriteToTempFile()
@@ -75,7 +95,7 @@ namespace MewsiferConsole.Mod
       Main.Logger.Log($"Writing logs to file: {LogTempFile}");
       using (var writer = new StreamWriter(LogTempFile, append: true))
       {
-        while (LogFileQueue.Count > MaxQueue / 2)
+        while (LogFileQueue.Any())
         {
           if (LogFileQueue.TryDequeue(out string message))
           {
