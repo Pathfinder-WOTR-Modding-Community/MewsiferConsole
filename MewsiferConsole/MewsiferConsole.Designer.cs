@@ -34,12 +34,12 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.dataGridView1 = new System.Windows.Forms.DataGridView();
-      this.Severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.TailToggle = new System.Windows.Forms.CheckBox();
       this.OmniFilter = new System.Windows.Forms.TextBox();
+      this.Severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.tableLayoutPanel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
       this.tableLayoutPanel2.SuspendLayout();
@@ -101,39 +101,6 @@
       this.dataGridView1.TabIndex = 0;
       this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
       // 
-      // Severity
-      // 
-      this.Severity.DataPropertyName = "Severity";
-      dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-      this.Severity.DefaultCellStyle = dataGridViewCellStyle3;
-      this.Severity.HeaderText = "Level";
-      this.Severity.MinimumWidth = 55;
-      this.Severity.Name = "Severity";
-      this.Severity.ReadOnly = true;
-      this.Severity.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-      this.Severity.ToolTipText = "Log Severity";
-      this.Severity.Width = 55;
-      // 
-      // ChannelName
-      // 
-      this.ChannelName.DataPropertyName = "ChannelName";
-      this.ChannelName.HeaderText = "Channel";
-      this.ChannelName.MinimumWidth = 8;
-      this.ChannelName.Name = "ChannelName";
-      this.ChannelName.ReadOnly = true;
-      this.ChannelName.Width = 150;
-      // 
-      // Message
-      // 
-      this.Message.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-      this.Message.DataPropertyName = "Message";
-      this.Message.FillWeight = 200F;
-      this.Message.HeaderText = "Message";
-      this.Message.MinimumWidth = 8;
-      this.Message.Name = "Message";
-      this.Message.ReadOnly = true;
-      // 
       // tableLayoutPanel2
       // 
       this.tableLayoutPanel2.ColumnCount = 2;
@@ -176,6 +143,38 @@
       this.OmniFilter.Size = new System.Drawing.Size(1456, 23);
       this.OmniFilter.TabIndex = 1;
       // 
+      // Severity
+      // 
+      this.Severity.DataPropertyName = "Severity";
+      dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.Severity.DefaultCellStyle = dataGridViewCellStyle3;
+      this.Severity.HeaderText = "Level";
+      this.Severity.MinimumWidth = 55;
+      this.Severity.Name = "Severity";
+      this.Severity.ReadOnly = true;
+      this.Severity.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+      this.Severity.ToolTipText = "Log Severity";
+      this.Severity.Width = 55;
+      // 
+      // ChannelName
+      // 
+      this.ChannelName.DataPropertyName = "ChannelName";
+      this.ChannelName.HeaderText = "Channel";
+      this.ChannelName.MinimumWidth = 200;
+      this.ChannelName.Name = "ChannelName";
+      this.ChannelName.ReadOnly = true;
+      this.ChannelName.Width = 200;
+      // 
+      // Message
+      // 
+      this.Message.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+      this.Message.DataPropertyName = "Message";
+      this.Message.FillWeight = 200F;
+      this.Message.HeaderText = "Message";
+      this.Message.MinimumWidth = 8;
+      this.Message.Name = "Message";
+      this.Message.ReadOnly = true;
+      // 
       // MewsiferConsole
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -201,8 +200,8 @@
         private TableLayoutPanel tableLayoutPanel2;
         private CheckBox TailToggle;
         private TextBox OmniFilter;
-        private DataGridViewTextBoxColumn Severity;
-        private DataGridViewTextBoxColumn ChannelName;
-        private DataGridViewTextBoxColumn Message;
-    }
+    private DataGridViewTextBoxColumn Severity;
+    private DataGridViewTextBoxColumn ChannelName;
+    private DataGridViewTextBoxColumn Message;
+  }
 }
