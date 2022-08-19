@@ -130,8 +130,25 @@ namespace MewsiferConsole
       else { index[key] = new() { row }; }
     }
 
-    private void Console_Load(object sender, EventArgs e) { }
-
-    private void dataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+    private void DataGrid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+    {
+      var dgv = sender as DataGridView;
+      if (dgv.Columns["Severity"].Index == e.ColumnIndex)
+      {
+        var viewModel = dgv.Rows[e.RowIndex].DataBoundItem as LogEventViewModel;
+        switch (viewModel.Severity)
+        {
+          case "I":
+            e.CellStyle.BackColor = Color.FromArgb(182, 215, 168);
+            break;
+          case "W":
+            e.CellStyle.BackColor = Color.FromArgb(249, 203, 156);
+            break;
+          case "E":
+            e.CellStyle.BackColor = Color.FromArgb(221, 126, 107);
+            break;
+        }
+      }
+    }
   }
 }
