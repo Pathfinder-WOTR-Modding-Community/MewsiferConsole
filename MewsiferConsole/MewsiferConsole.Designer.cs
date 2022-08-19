@@ -28,130 +28,145 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.TailToggle = new System.Windows.Forms.CheckBox();
-            this.OmniFilter = new System.Windows.Forms.TextBox();
-            this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1706, 982);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.dataGridView1 = new System.Windows.Forms.DataGridView();
+      this.Severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+      this.TailToggle = new System.Windows.Forms.CheckBox();
+      this.OmniFilter = new System.Windows.Forms.TextBox();
+      this.tableLayoutPanel1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+      this.tableLayoutPanel2.SuspendLayout();
+      this.SuspendLayout();
+      // 
+      // tableLayoutPanel1
+      // 
+      this.tableLayoutPanel1.ColumnCount = 1;
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 1);
+      this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
+      this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+      this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
+      this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+      this.tableLayoutPanel1.RowCount = 3;
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(1365, 786);
+      this.tableLayoutPanel1.TabIndex = 0;
+      // 
+      // dataGridView1
+      // 
+      this.dataGridView1.AllowUserToAddRows = false;
+      this.dataGridView1.AllowUserToDeleteRows = false;
+      dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+      this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+      this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Severity,
             this.ChannelName,
             this.Message});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(2, 66);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidth = 62;
-            this.dataGridView1.RowTemplate.Height = 33;
-            this.dataGridView1.Size = new System.Drawing.Size(1702, 894);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellContentClick);
-            // 
-            // ChannelName
-            // 
-            this.ChannelName.DataPropertyName = "ChannelName";
-            this.ChannelName.Frozen = true;
-            this.ChannelName.HeaderText = "Channel";
-            this.ChannelName.MinimumWidth = 8;
-            this.ChannelName.Name = "ChannelName";
-            this.ChannelName.ReadOnly = true;
-            this.ChannelName.Width = 150;
-            // 
-            // Message
-            // 
-            this.Message.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Message.DataPropertyName = "Message";
-            this.Message.FillWeight = 200F;
-            this.Message.HeaderText = "Message";
-            this.Message.MinimumWidth = 8;
-            this.Message.Name = "Message";
-            this.Message.ReadOnly = true;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel2.Controls.Add(this.TailToggle, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.OmniFilter, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 2);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1702, 60);
-            this.tableLayoutPanel2.TabIndex = 1;
-            // 
-            // TailToggle
-            // 
-            this.TailToggle.Appearance = System.Windows.Forms.Appearance.Button;
-            this.TailToggle.AutoSize = true;
-            this.TailToggle.Checked = true;
-            this.TailToggle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TailToggle.Location = new System.Drawing.Point(1624, 2);
-            this.TailToggle.Margin = new System.Windows.Forms.Padding(2);
-            this.TailToggle.Name = "TailToggle";
-            this.TailToggle.Size = new System.Drawing.Size(46, 35);
-            this.TailToggle.TabIndex = 0;
-            this.TailToggle.Text = "Tail";
-            this.TailToggle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.TailToggle.UseVisualStyleBackColor = true;
-            // 
-            // OmniFilter
-            // 
-            this.OmniFilter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OmniFilter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.OmniFilter.Location = new System.Drawing.Point(2, 2);
-            this.OmniFilter.Margin = new System.Windows.Forms.Padding(2);
-            this.OmniFilter.Name = "OmniFilter";
-            this.OmniFilter.Size = new System.Drawing.Size(1618, 39);
-            this.OmniFilter.TabIndex = 1;
-            // 
-            // MewsiferConsole
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1706, 982);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "MewsiferConsole";
-            this.Text = "MewsiferConsole";
-            this.Load += new System.EventHandler(this.Console_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
-            this.ResumeLayout(false);
+      this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataGridView1.Location = new System.Drawing.Point(2, 53);
+      this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
+      this.dataGridView1.Name = "dataGridView1";
+      this.dataGridView1.ReadOnly = true;
+      this.dataGridView1.RowHeadersVisible = false;
+      this.dataGridView1.RowHeadersWidth = 62;
+      this.dataGridView1.RowTemplate.Height = 33;
+      this.dataGridView1.Size = new System.Drawing.Size(1361, 715);
+      this.dataGridView1.TabIndex = 0;
+      this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellContentClick);
+      // 
+      // Severity
+      // 
+      this.Severity.DataPropertyName = "Severity";
+      this.Severity.HeaderText = "Level";
+      this.Severity.Name = "Severity";
+      this.Severity.ReadOnly = true;
+      this.Severity.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+      this.Severity.ToolTipText = "Log Severity";
+      this.Severity.Width = 50;
+      // 
+      // ChannelName
+      // 
+      this.ChannelName.DataPropertyName = "ChannelName";
+      this.ChannelName.HeaderText = "Channel";
+      this.ChannelName.MinimumWidth = 8;
+      this.ChannelName.Name = "ChannelName";
+      this.ChannelName.ReadOnly = true;
+      this.ChannelName.Width = 150;
+      // 
+      // Message
+      // 
+      this.Message.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+      this.Message.DataPropertyName = "Message";
+      this.Message.FillWeight = 200F;
+      this.Message.HeaderText = "Message";
+      this.Message.MinimumWidth = 8;
+      this.Message.Name = "Message";
+      this.Message.ReadOnly = true;
+      // 
+      // tableLayoutPanel2
+      // 
+      this.tableLayoutPanel2.ColumnCount = 2;
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
+      this.tableLayoutPanel2.Controls.Add(this.TailToggle, 1, 0);
+      this.tableLayoutPanel2.Controls.Add(this.OmniFilter, 0, 0);
+      this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 2);
+      this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
+      this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+      this.tableLayoutPanel2.RowCount = 1;
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel2.Size = new System.Drawing.Size(1361, 47);
+      this.tableLayoutPanel2.TabIndex = 1;
+      // 
+      // TailToggle
+      // 
+      this.TailToggle.Appearance = System.Windows.Forms.Appearance.Button;
+      this.TailToggle.AutoSize = true;
+      this.TailToggle.Checked = true;
+      this.TailToggle.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.TailToggle.Location = new System.Drawing.Point(1299, 2);
+      this.TailToggle.Margin = new System.Windows.Forms.Padding(2);
+      this.TailToggle.Name = "TailToggle";
+      this.TailToggle.Size = new System.Drawing.Size(41, 30);
+      this.TailToggle.TabIndex = 0;
+      this.TailToggle.Text = "Tail";
+      this.TailToggle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.TailToggle.UseVisualStyleBackColor = true;
+      // 
+      // OmniFilter
+      // 
+      this.OmniFilter.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.OmniFilter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      this.OmniFilter.Location = new System.Drawing.Point(2, 2);
+      this.OmniFilter.Margin = new System.Windows.Forms.Padding(2);
+      this.OmniFilter.Name = "OmniFilter";
+      this.OmniFilter.Size = new System.Drawing.Size(1293, 29);
+      this.OmniFilter.TabIndex = 1;
+      // 
+      // MewsiferConsole
+      // 
+      this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.ClientSize = new System.Drawing.Size(1365, 786);
+      this.Controls.Add(this.tableLayoutPanel1);
+      this.Margin = new System.Windows.Forms.Padding(2);
+      this.Name = "MewsiferConsole";
+      this.Text = "MewsiferConsole";
+      this.Load += new System.EventHandler(this.Console_Load);
+      this.tableLayoutPanel1.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+      this.tableLayoutPanel2.ResumeLayout(false);
+      this.tableLayoutPanel2.PerformLayout();
+      this.ResumeLayout(false);
 
         }
 
@@ -159,10 +174,11 @@
 
         private TableLayoutPanel tableLayoutPanel1;
         private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn ChannelName;
-        private DataGridViewTextBoxColumn Message;
         private TableLayoutPanel tableLayoutPanel2;
         private CheckBox TailToggle;
         private TextBox OmniFilter;
+        private DataGridViewTextBoxColumn Severity;
+        private DataGridViewTextBoxColumn ChannelName;
+        private DataGridViewTextBoxColumn Message;
     }
 }
