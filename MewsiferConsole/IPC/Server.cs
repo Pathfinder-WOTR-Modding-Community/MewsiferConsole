@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.IO.Pipes;
+﻿using System.IO.Pipes;
 using static MewsiferConsole.Common.PipeContract;
 
 namespace MewsiferConsole.IPC

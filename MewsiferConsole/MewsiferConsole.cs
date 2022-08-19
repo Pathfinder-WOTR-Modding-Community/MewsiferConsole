@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using MewsiferConsole.Common;
-using MewsiferConsole.IPC;
 using Timer = System.Windows.Forms.Timer;
 
 namespace MewsiferConsole

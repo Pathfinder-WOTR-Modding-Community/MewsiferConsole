@@ -1,8 +1,6 @@
 ﻿using MewsiferConsole.Common;
-using MewsiferConsole.Mod.IPC;
 using System;
 using System.Collections.Generic;
-using static MewsiferConsole.Common.PipeContract;
 
 namespace MewsiferConsole.Mod.UMMLogging
 {

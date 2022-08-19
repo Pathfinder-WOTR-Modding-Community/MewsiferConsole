@@ -4,7 +4,6 @@ using Owlcat.Runtime.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static MewsiferConsole.Common.PipeContract;
 using MewsiferSeverity = MewsiferConsole.Common.LogSeverity;
 using OwlcatSeverity = Owlcat.Runtime.Core.Logging.LogSeverity;
 
