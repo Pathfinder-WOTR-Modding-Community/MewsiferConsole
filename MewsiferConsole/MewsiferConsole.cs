@@ -6,7 +6,6 @@ namespace MewsiferConsole
 {
   public partial class MewsiferConsole : Form
   {
-    private readonly BindingSource BindingSource;
     private readonly BindingList<LogEventViewModel> Messages;
     private readonly LogMessageFilterView FilterView;
 
@@ -39,12 +38,10 @@ namespace MewsiferConsole
     public MewsiferConsole()
     {
       InitializeComponent();
-      BindingSource = new();
       Messages = new();
       FilterView = new(Messages);
-      dataGridView1.AutoGenerateColumns = true;
+      dataGridView1.AutoGenerateColumns = false;
 
-      BindingSource.DataSource = FilterView;
       dataGridView1.DataSource = FilterView;
 
       App.MessageSource.LogEvent += logEvent =>
@@ -132,10 +129,12 @@ namespace MewsiferConsole
 
     private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
     {
-      var dgv = sender as DataGridView;
+      if (sender is not DataGridView dgv) return;
+
       if (dgv.Columns["Severity"].Index == e.ColumnIndex)
       {
-        var viewModel = dgv.Rows[e.RowIndex].DataBoundItem as LogEventViewModel;
+        if (dgv.Rows[e.RowIndex].DataBoundItem is not LogEventViewModel viewModel) return;
+
         switch (viewModel.Severity)
         {
           case "I":
