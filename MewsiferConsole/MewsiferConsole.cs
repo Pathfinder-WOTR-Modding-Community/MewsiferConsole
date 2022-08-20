@@ -13,21 +13,21 @@ namespace MewsiferConsole
     private readonly List<LogEvent>[] Queues = { new(), new() };
     private int IncomingIndex = 0;
 
-    private readonly Timer Timer;
+    private readonly Timer? Timer;
 
     private bool IsScrolledToEnd
     {
       get
       {
-        int firstDisplayed = dataGridView1.FirstDisplayedScrollingRowIndex;
-        int lastVisible = firstDisplayed + dataGridView1.DisplayedRowCount(true) - 1;
-        return lastVisible == dataGridView1.RowCount - 1;
+        int firstDisplayed = logTable.FirstDisplayedScrollingRowIndex;
+        int lastVisible = firstDisplayed + logTable.DisplayedRowCount(true) - 1;
+        return lastVisible == logTable.RowCount - 1;
       }
       set
       {
-        if (dataGridView1.RowCount > 0)
+        if (logTable.RowCount > 0)
         {
-          dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.RowCount - 1;
+          logTable.FirstDisplayedScrollingRowIndex = logTable.RowCount - 1;
         }
       }
     }
@@ -35,25 +35,36 @@ namespace MewsiferConsole
     private readonly Dictionary<string, List<int>> IndexRowLookup = new();
     private readonly Dictionary<string, List<int>> ByChannel = new();
 
-    Count infoCountVal;
-    Count warnCountVal;
-    Count errCountVal;
+    private readonly Count infoCountVal;
+    private readonly Count warnCountVal;
+    private readonly Count errCountVal;
 
     public MewsiferConsole()
     {
       InitializeComponent();
       Messages = new();
       FilterView = new(Messages);
-      dataGridView1.AutoGenerateColumns = false;
+      logTable.AutoGenerateColumns = false;
+
+      var messageCol = new MessageStackColumn
+      {
+        HeaderText = "Message",
+        Name = "Message",
+        DataPropertyName = "Message",
+        AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
+        FillWeight = 200
+      };
+      logTable.Columns.Add(messageCol);
+      logTable.AllowUserToResizeRows = false;
 
 
       infoCountVal = new(infoCount, "I");
       warnCountVal = new(warnCount, "W");
       errCountVal = new(errCount, "E");
 
-      dataGridView1.DataSource = FilterView;
-      dataGridView1.RowsAdded += (_, _) => OnRowsAddedOrRemoved();
-      dataGridView1.RowsRemoved += (_, _) => OnRowsAddedOrRemoved();
+      logTable.DataSource = FilterView;
+      logTable.RowsAdded += (_, _) => OnRowsAddedOrRemoved();
+      logTable.RowsRemoved += (_, _) => OnRowsAddedOrRemoved();
 
       tooltip.SetToolTip(infoCount, "Total number of messages with the severity level: info");
       tooltip.SetToolTip(warnCount, "Total number of messages with the severity level: warning");
@@ -106,7 +117,7 @@ namespace MewsiferConsole
 
       App.MessageSource.Start();
 
-      dataGridView1.Scroll += (obj, evt) =>
+      logTable.Scroll += (obj, evt) =>
       {
         if (evt.NewValue < evt.OldValue) { TailToggle.Checked = false; }
         if (evt.NewValue > evt.OldValue && IsScrolledToEnd) { TailToggle.Checked = true; }
@@ -189,7 +200,7 @@ namespace MewsiferConsole
           LogEventViewModel newMessage = new(rawEvent);
           Messages.Add(newMessage);
 
-          AddIndex(IndexRowLookup, newMessage.Message, Messages.Count);
+          AddIndex(IndexRowLookup, newMessage.MessageText, Messages.Count);
           AddIndex(ByChannel, newMessage.ChannelName, Messages.Count);
 
           var count = rawEvent.Severity switch

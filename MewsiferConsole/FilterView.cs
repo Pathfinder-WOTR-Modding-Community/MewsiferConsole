@@ -40,7 +40,7 @@ namespace MewsiferConsole
       LogEventViewModel model = ViewModel[index];
 
       bool channelMatch = currentFilter.MatchChannel(model.ChannelName);
-      bool rawMatch = currentFilter.MatchRaw(model.Message);
+      bool rawMatch = currentFilter.MatchRaw(model.MessageText);
 
       if (rawMatch && channelMatch)
       {

@@ -13,13 +13,17 @@ namespace MewsiferConsole
       Severity = GetSeverityLabel(model.Severity);
     }
 
+    public int RequiredExtraHeight = -1;
+    public bool Expanded = false;
+
     public string ChannelName => Model.Channel;
-    public string Message => Model.Message;
+    public LogEventViewModel Message => this;
+    public string MessageText => Model.Message;
     public string Severity { get; }
 
     internal bool MergesWith(LogEvent evt)
     {
-      return evt.Channel == Model.Channel && evt.Message == Message;
+      return evt.Channel == Model.Channel && evt.Message == MessageText;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

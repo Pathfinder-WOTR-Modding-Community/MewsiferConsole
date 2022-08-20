@@ -34,10 +34,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.logTable = new System.Windows.Forms.DataGridView();
             this.Severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.topPanelTable = new System.Windows.Forms.TableLayoutPanel();
             this.TailToggle = new System.Windows.Forms.CheckBox();
             this.OmniFilter = new System.Windows.Forms.TextBox();
@@ -47,7 +46,7 @@
             this.shownCount = new System.Windows.Forms.Label();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logTable)).BeginInit();
             this.topPanelTable.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +54,7 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.logTable, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.topPanelTable, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -68,12 +67,12 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(2032, 909);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // dataGridView1
+            // logTable
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.logTable.AllowUserToAddRows = false;
+            this.logTable.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.logTable.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -81,12 +80,11 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.logTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.logTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.logTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Severity,
-            this.ChannelName,
-            this.Message});
+            this.ChannelName});
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -94,18 +92,18 @@
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(2, 48);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowHeadersWidth = 62;
-            this.dataGridView1.RowTemplate.Height = 33;
-            this.dataGridView1.Size = new System.Drawing.Size(2028, 845);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
+            this.logTable.DefaultCellStyle = dataGridViewCellStyle4;
+            this.logTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logTable.Location = new System.Drawing.Point(2, 48);
+            this.logTable.Margin = new System.Windows.Forms.Padding(2);
+            this.logTable.Name = "logTable";
+            this.logTable.ReadOnly = true;
+            this.logTable.RowHeadersVisible = false;
+            this.logTable.RowHeadersWidth = 62;
+            this.logTable.RowTemplate.Height = 33;
+            this.logTable.Size = new System.Drawing.Size(2028, 845);
+            this.logTable.TabIndex = 0;
+            this.logTable.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
             // Severity
             // 
@@ -128,16 +126,6 @@
             this.ChannelName.Name = "ChannelName";
             this.ChannelName.ReadOnly = true;
             this.ChannelName.Width = 300;
-            // 
-            // Message
-            // 
-            this.Message.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Message.DataPropertyName = "Message";
-            this.Message.FillWeight = 200F;
-            this.Message.HeaderText = "Message";
-            this.Message.MinimumWidth = 8;
-            this.Message.Name = "Message";
-            this.Message.ReadOnly = true;
             // 
             // topPanelTable
             // 
@@ -251,7 +239,7 @@
             this.Name = "MewsiferConsole";
             this.Text = "MewsiferConsole";
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logTable)).EndInit();
             this.topPanelTable.ResumeLayout(false);
             this.topPanelTable.PerformLayout();
             this.ResumeLayout(false);
@@ -261,7 +249,7 @@
     #endregion
 
     private TableLayoutPanel tableLayoutPanel1;
-        private DataGridView dataGridView1;
+        private DataGridView logTable;
         private TableLayoutPanel topPanelTable;
         private CheckBox TailToggle;
         private TextBox OmniFilter;
@@ -272,6 +260,5 @@
         private ToolTip tooltip;
         private DataGridViewTextBoxColumn Severity;
         private DataGridViewTextBoxColumn ChannelName;
-        private DataGridViewTextBoxColumn Message;
     }
 }
