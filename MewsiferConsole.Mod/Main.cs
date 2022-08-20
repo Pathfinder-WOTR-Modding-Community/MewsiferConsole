@@ -42,6 +42,7 @@ namespace MewsiferConsole.Mod
       catch (Exception e)
       {
         Logger.LogException("Failed to load", e);
+        return false;
       }
       return true;
     }
