@@ -77,7 +77,7 @@ namespace MewsiferConsole.Mod.UMMLogging
       {
         try
         {
-          LogSink.Log(LogSeverity.Error, (string)Prefix.GetValue(__instance), str);
+          LogSink.Log(LogSeverity.Verbose, (string)Prefix.GetValue(__instance), str);
         }
         catch (Exception e)
         {
