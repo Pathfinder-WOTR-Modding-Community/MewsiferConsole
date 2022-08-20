@@ -31,7 +31,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.fromFile = new System.Windows.Forms.Button();
             this.fromGame = new System.Windows.Forms.Button();
-            this.fromDpaste = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,7 +42,6 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.Controls.Add(this.fromFile, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.fromGame, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.fromDpaste, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -74,17 +72,6 @@
             this.fromGame.UseVisualStyleBackColor = true;
             this.fromGame.Click += new System.EventHandler(this.fromGame_Click);
             // 
-            // fromDpaste
-            // 
-            this.fromDpaste.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fromDpaste.Location = new System.Drawing.Point(1015, 3);
-            this.fromDpaste.Name = "fromDpaste";
-            this.fromDpaste.Size = new System.Drawing.Size(501, 193);
-            this.fromDpaste.TabIndex = 2;
-            this.fromDpaste.Text = "Load from dpaste.org";
-            this.fromDpaste.UseVisualStyleBackColor = true;
-            this.fromDpaste.Click += new System.EventHandler(this.fromDpaste_Click);
-            // 
             // ChooseMessageSourceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -103,6 +90,5 @@
         private TableLayoutPanel tableLayoutPanel1;
         private Button fromFile;
         private Button fromGame;
-        private Button fromDpaste;
     }
 }

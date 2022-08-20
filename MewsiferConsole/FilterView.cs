@@ -217,6 +217,7 @@ namespace MewsiferConsole
     public void RemoveFilter()
     {
       Filter = "";
+      ListChanged?.Invoke(this, new(ListChangedType.Reset, -1));
     }
 
     public void RemoveIndex(PropertyDescriptor property)
@@ -267,22 +268,7 @@ namespace MewsiferConsole
 
       foreach (var c in components)
       {
-        if (c.Contains(':'))
-        {
-          var kv = c.Split(':', 2);
-          if (kv.Length == 2 && kv[0] is "ch" or "channel" or "c")
-          {
-            newFilter.channel = kv[1];
-          }
-          else
-          {
-            newFilter.rawTerms.Add(c);
-          }
-        }
-        else
-        {
-          newFilter.rawTerms.Add(c);
-        }
+        newFilter.Add(c);
       }
 
       if (newFilter == currentFilter)
@@ -306,46 +292,160 @@ namespace MewsiferConsole
 
   public class FilterModel
   {
-    public HashSet<string> rawTerms = new();
-    public string channel = "";
+    public MatchTermList messageTerms = new();
+
+    public MatchTermList channelTerms = new()
+    {
+      CombinePositiveWith = TermCombiner.Or
+    };
 
     private IEnumerable<string> RenderComponents
     {
       get
       {
-        if (channel.Length > 0)
-          yield return $"ch:{channel}";
+        foreach (var rendered in channelTerms.RenderComponents("ch:"))
+          yield return rendered;
 
-        foreach (var term in rawTerms)
-          yield return term;
+        foreach (var rendered in messageTerms.RenderComponents(""))
+          yield return rendered;
       }
     }
     public string Render => String.Join(" ", RenderComponents);
 
     internal bool MatchChannel(string channelName)
     {
-        return channel.Length == 0 || channelName.Contains(channel, StringComparison.OrdinalIgnoreCase);
+      return channelTerms.Matches(channelName);
     }
 
     internal bool MatchRaw(string message)
     {
-        return rawTerms.Count == 0 || rawTerms.Any(term => message.Contains(term, StringComparison.OrdinalIgnoreCase));
+      return messageTerms.Matches(message);
+    }
+
+    internal void Add(string c)
+    {
+      if (c.Length == 0) return;
+
+      bool addedSpecial = false;
+      if (c.Contains(':'))
+      {
+        var kv = c.Split(':', 2);
+        if (kv.Length == 2 && kv[0] is "ch" or "-ch")
+        {
+          channelTerms.Add(kv[0][0] is '-', kv[1]);
+          addedSpecial = true;
+        }
+      }
+
+      if (!addedSpecial)
+      {
+        if (c[0] is '-')
+          messageTerms.Add(true, c[1..]);
+        else
+          messageTerms.Add(false, c);
+      }
     }
 
     public override bool Equals(object? obj)
     {
       return obj is FilterModel model &&
-             EqualityComparer<HashSet<string>>.Default.Equals(rawTerms, model.rawTerms) &&
-             channel == model.channel;
+             EqualityComparer<MatchTermList>.Default.Equals(messageTerms, model.messageTerms) &&
+             EqualityComparer<MatchTermList>.Default.Equals(channelTerms, model.channelTerms);
     }
 
     public override int GetHashCode()
     {
-      return HashCode.Combine(rawTerms, channel);
+      return HashCode.Combine(messageTerms, channelTerms);
     }
-
 
     public static bool operator ==(FilterModel lhs, FilterModel rhs) => lhs.Equals(rhs);
     public static bool operator !=(FilterModel lhs, FilterModel rhs) => !(lhs == rhs);
+  }
+
+  public enum TermCombiner
+  {
+    Or,
+    And,
+  }
+
+  public class MatchTermList
+  {
+    private readonly List<MatchTerm> terms = new();
+    public TermCombiner CombinePositiveWith = TermCombiner.And;
+    public TermCombiner CombineNegativeWith = TermCombiner.And;
+
+    public void Add(bool negate, string raw)
+    {
+      if (raw.Length == 0) return;
+
+      terms.Add(new()
+      {
+        negated = negate,
+        value = new(raw),
+      });
+
+    }
+
+    public override bool Equals(object? obj)
+    {
+      return obj is MatchTermList list &&
+             EqualityComparer<List<MatchTerm>>.Default.Equals(terms, list.terms);
+    }
+
+    public override int GetHashCode()
+    {
+      return HashCode.Combine(terms);
+    }
+
+    public bool Matches(string input)
+    {
+      if (terms.Count == 0) return true;
+
+      bool ret = terms[0].Matches(input);
+
+      foreach (var term in terms.Skip(1))
+      {
+        TermCombiner combine = term.negated ? CombineNegativeWith : CombinePositiveWith;
+
+        if (combine == TermCombiner.Or)
+          ret = ret || term.Matches(input);
+        else if (combine == TermCombiner.And)
+          ret = ret && term.Matches(input);
+      }
+
+      return ret;
+    }
+
+    internal IEnumerable<string> RenderComponents(string prefix)
+    {
+      foreach (var t in terms)
+        yield return $"{t.RenderPre}{prefix}{t.value}";
+    }
+  }
+
+  public class MatchTerm
+  {
+    public string value = ""; //regex??
+    public bool negated = false;
+
+    public string RenderPre => negated ? "-" : "";
+
+    public override bool Equals(object? obj)
+    {
+      return obj is MatchTerm term &&
+             value == term.value &&
+             negated == term.negated;
+    }
+
+    public override int GetHashCode()
+    {
+      return HashCode.Combine(value, negated);
+    }
+
+    public bool Matches(string input)
+    {
+      return input.Contains(value, StringComparison.OrdinalIgnoreCase) != negated;
+    }
+
   }
 }

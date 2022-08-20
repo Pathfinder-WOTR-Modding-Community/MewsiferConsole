@@ -6,10 +6,11 @@ namespace MewsiferConsole.IPC
   internal class Server : IRawMessageSource
   {
     private bool Enabled = true;
+    public bool IsBounded => false;
 
     public event HandleRawMessage? RawMessage;
     public event TitleChanged? TitleChanged;
-
+    public event Action? Completed { add { } remove { } }
 
     public void Start()
     {

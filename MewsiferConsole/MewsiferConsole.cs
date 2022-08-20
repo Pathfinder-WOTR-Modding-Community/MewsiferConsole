@@ -35,6 +35,10 @@ namespace MewsiferConsole
     private readonly Dictionary<string, List<int>> IndexRowLookup = new();
     private readonly Dictionary<string, List<int>> ByChannel = new();
 
+    Count infoCountVal;
+    Count warnCountVal;
+    Count errCountVal;
+
     public MewsiferConsole()
     {
       InitializeComponent();
@@ -42,7 +46,49 @@ namespace MewsiferConsole
       FilterView = new(Messages);
       dataGridView1.AutoGenerateColumns = false;
 
+
+      infoCountVal = new(infoCount, "I");
+      warnCountVal = new(warnCount, "W");
+      errCountVal = new(errCount, "E");
+
       dataGridView1.DataSource = FilterView;
+      dataGridView1.RowsAdded += (_, _) => OnRowsAddedOrRemoved();
+      dataGridView1.RowsRemoved += (_, _) => OnRowsAddedOrRemoved();
+
+      tooltip.SetToolTip(infoCount, "Total number of messages with the severity level: info");
+      tooltip.SetToolTip(warnCount, "Total number of messages with the severity level: warning");
+      tooltip.SetToolTip(errCount, "Total number of messages with the severity level: error");
+
+      tooltip.SetToolTip(shownCount, "Displayed messages / Total message");
+
+      if (App.MessageSource.IsBounded)
+      {
+        Messages.RaiseListChangedEvents = false;
+        App.MessageSource.Completed += () =>
+        {
+          BeginInvoke(() =>
+          {
+            ProcessPendingMessages();
+
+            Messages.RaiseListChangedEvents = true;
+            Messages.ResetBindings();
+            FilterView.RemoveFilter();
+            RenderCountLabels();
+            IsScrolledToEnd = true;
+
+          });
+        };
+      }
+      else
+      {
+        Timer = new()
+        {
+          Interval = 33
+        };
+
+        Timer.Tick += (_, _) => ProcessPendingMessages();
+        Timer.Start();
+      }
 
       App.MessageSource.LogEvent += logEvent =>
       {
@@ -76,49 +122,18 @@ namespace MewsiferConsole
         FilterView.Filter = OmniFilter.Text.Trim();
       };
 
-      Timer = new()
-      {
-        Interval = 33
-      };
+    }
 
-      Timer.Tick += (obj, evt) =>
-      {
-        List<LogEvent> toProcess;
-        lock(QueueLock)
-        {
-          toProcess = Queues[IncomingIndex];
-          IncomingIndex = (IncomingIndex == 0) ? 1 : 0;
-        }
+    private void RenderCountLabels()
+    {
+      infoCountVal.Render();
+      warnCountVal.Render();
+      errCountVal.Render();
+    }
 
-        //messages.RaiseListChangedEvents = false;
-        int addCount = 0;
-        foreach (var rawEvent in toProcess)
-        {
-          LogEventViewModel? prev = Messages.Count > 0 ? Messages.Last() : null;
-
-          if (prev?.MergesWith(rawEvent) == true)
-          {
-            prev.MergedCount++;
-          }
-          else
-          {
-            LogEventViewModel newMessage = new(rawEvent);
-            Messages.Add(newMessage);
-
-            AddIndex(IndexRowLookup, newMessage.Message, Messages.Count);
-            AddIndex(ByChannel, newMessage.ChannelName, Messages.Count);
-
-            addCount++;
-          }
-        }
-
-        if (addCount > 0 && TailToggle.Checked) { IsScrolledToEnd = true; }
-
-        //messages.RaiseListChangedEvents = true;
-        //bindingSource.ResetBindings(false);
-        toProcess.Clear();
-      };
-      Timer.Start();
+    private void OnRowsAddedOrRemoved()
+    {
+      shownCount.Text = $"{FilterView.Count}/{Messages.Count}";
     }
 
     private static void AddIndex(Dictionary<string, List<int>> index, string key, int row)
@@ -149,5 +164,81 @@ namespace MewsiferConsole
         }
       }
     }
-  }
+
+    private void ProcessPendingMessages()
+    {
+      List<LogEvent> toProcess;
+      lock (QueueLock)
+      {
+        toProcess = Queues[IncomingIndex];
+        IncomingIndex = (IncomingIndex == 0) ? 1 : 0;
+      }
+
+      //messages.RaiseListChangedEvents = false;
+      int addCount = 0;
+      foreach (var rawEvent in toProcess)
+      {
+        LogEventViewModel? prev = Messages.Count > 0 ? Messages.Last() : null;
+
+        if (prev?.MergesWith(rawEvent) == true)
+        {
+          prev.MergedCount++;
+        }
+        else
+        {
+          LogEventViewModel newMessage = new(rawEvent);
+          Messages.Add(newMessage);
+
+          AddIndex(IndexRowLookup, newMessage.Message, Messages.Count);
+          AddIndex(ByChannel, newMessage.ChannelName, Messages.Count);
+
+          var count = rawEvent.Severity switch
+          {
+            LogSeverity.Info => infoCountVal,
+            LogSeverity.Warning => warnCountVal,
+            LogSeverity.Error => errCountVal,
+            LogSeverity.Verbose => infoCountVal,
+            _ => throw new NotImplementedException(),
+          };
+
+          count.Value++;
+
+          addCount++;
+        }
+      }
+
+      if (addCount > 0 && Messages.RaiseListChangedEvents)
+      {
+        RenderCountLabels();
+        if (TailToggle.Checked)
+          IsScrolledToEnd = true;
+      }
+
+      //messages.RaiseListChangedEvents = true;
+      //bindingSource.ResetBindings(false);
+      toProcess.Clear();
+    }
+    public class Count
+    {
+      public int Value = 0;
+      public readonly Label Label;
+      public readonly string Prefix;
+
+      public Count(Label label, string prefix)
+      {
+        Label = label;
+        Prefix = prefix;
+      }
+
+      internal void Render()
+      {
+        Label.Text = $"{Prefix}: {Value}";
+      }
+    }
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
+    }
 }

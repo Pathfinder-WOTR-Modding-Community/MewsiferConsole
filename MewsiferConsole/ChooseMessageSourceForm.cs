@@ -29,15 +29,6 @@
       Close();
     }
 
-    private void fromDpaste_Click(object sender, EventArgs e)
-    {
-      string input = "";
-      if (ShowInputDialog(ref input) == DialogResult.OK)
-        App.MessageSource.Source = new MessagesFromDpaste(input);
-      Close();
-
-    }
-
     private static DialogResult ShowInputDialog(ref string input)
     {
       System.Drawing.Size size = new System.Drawing.Size(600, 100);

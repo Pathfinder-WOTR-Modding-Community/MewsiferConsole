@@ -29,10 +29,6 @@ namespace MewsiferConsole
         {
           MessageSource.Source = new MessagesFromFile(args[1]);
         }
-        else if (args[1].StartsWith("https://dpaste.org/"))
-        {
-          MessageSource.Source = new MessagesFromDpaste(args[1]);
-        }
       }
 
       if (MessageSource.Source == null)

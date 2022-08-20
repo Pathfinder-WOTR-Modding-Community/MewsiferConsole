@@ -22,6 +22,7 @@ namespace MewsiferConsole
         {
           _Source.TitleChanged -= OnSourceTitleChanged;
           _Source.RawMessage -= OnRawMessageReceived;
+          _Source.Completed -= OnSourceCompleted;
 
         }
         _Source = value;
@@ -29,10 +30,18 @@ namespace MewsiferConsole
         {
           _Source.TitleChanged += OnSourceTitleChanged;
           _Source.RawMessage += OnRawMessageReceived;
+          _Source.Completed += OnSourceCompleted;
         }
 
       }
     }
+
+    public bool IsBounded => _Source?.IsBounded ?? false;
+
+    /// <summary>
+    /// Raised when a <see cref="IsBounded"/> source has raised events for all its messages
+    /// </summary>
+    public event Action? Completed;
 
     /// <summary>
     /// Raised when a new <see cref="LogEvent"/> is ready
@@ -53,6 +62,8 @@ namespace MewsiferConsole
     {
       TitleChanged?.Invoke(title);
     }
+
+    private void OnSourceCompleted() => Completed?.Invoke();
 
     private void OnRawMessageReceived(string raw)
     {
@@ -99,57 +110,24 @@ namespace MewsiferConsole
 
     public event TitleChanged TitleChanged;
 
+    public event Action Completed;
+
+    public bool IsBounded { get; }
+
     /// <summary>
     /// Enter a busy loop consuming all messages
     /// </summary>
     public void Start();
   }
 
-  public class MessagesFromDpaste : IRawMessageSource
-  {
-    public event HandleRawMessage? RawMessage;
-    public event TitleChanged? TitleChanged;
-
-    private readonly string url;
-
-    public void Start()
-    {
-
-      HttpClient client = new();
-      var response = client.GetAsync(url).Result;
-
-      if (!response.IsSuccessStatusCode)
-      {
-        TitleChanged?.Invoke(url + " error: " + response.StatusCode);
-        return;
-      }
-
-      TitleChanged?.Invoke(url);
-
-      var raw = response.Content.ReadAsStringAsync().Result;
-      var lines = raw.Split("\n");
-
-      foreach (var line in lines)
-      {
-        RawMessage?.Invoke(line);
-      }
-    }
-
-    public MessagesFromDpaste(string url)
-    {
-      if (!url.EndsWith("/raw"))
-        url += "/raw";
-
-      this.url = url;
-    }
-  }
-
   public class MessagesFromFile : IRawMessageSource
   {
     public event HandleRawMessage? RawMessage;
     public event TitleChanged? TitleChanged;
+    public event Action? Completed;
 
     private readonly string path;
+    public bool IsBounded => true;
 
     public void Start()
     {
@@ -160,6 +138,8 @@ namespace MewsiferConsole
       {
         RawMessage?.Invoke(line);
       }
+
+      Completed?.Invoke();
     }
 
     public MessagesFromFile(string path)
