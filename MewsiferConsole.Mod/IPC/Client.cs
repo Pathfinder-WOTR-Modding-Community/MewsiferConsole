@@ -90,7 +90,6 @@ namespace MewsiferConsole.Mod.IPC
         try
         {
           Stream?.Dispose();
-          Main.Logger.Log("Connecting to MewsiferConsole.");
           Main.Logger.Log($"Connecting to MewsiferConsole: {PipeName}");
           Stream = new(".", PipeName, PipeDirection.Out);
           Stream.Connect();
