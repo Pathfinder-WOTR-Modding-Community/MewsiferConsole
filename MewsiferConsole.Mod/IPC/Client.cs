@@ -126,10 +126,11 @@ namespace MewsiferConsole.Mod.IPC
       {
         while (Enabled)
         {
-          if (MessageQueue.Any() && MessageQueue.TryDequeue(out string message))
+          if (MessageQueue.Any() && MessageQueue.TryPeek(out string message))
           {
             writer.Write(message);
             writer.Flush();
+            MessageQueue.TryDequeue(out _);
           }
           else
           {
