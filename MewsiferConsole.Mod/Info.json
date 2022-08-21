@@ -2,7 +2,7 @@
   "Id": "MewsiferConsole.Mod",
   "DisplayName": "MewsiferConsole",
   "Author": "WittleWolfie and Bubbles",
-  "Version": "0.1.0",
+  "Version": "1.0.0",
   "ManagerVersion": "0.21.3",
   "AssemblyName": "MewsiferConsole.Mod.dll",
   "EntryMethod": "MewsiferConsole.Mod.Main.Load",
