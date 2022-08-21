@@ -62,7 +62,7 @@ namespace MewsiferConsole
 
     private static Font MakeStackTraceFont(DataGridViewCellStyle cellStyle)
     {
-      return new(cellStyle.Font.FontFamily, cellStyle.Font.Size * 0.8f, cellStyle.Font.Style, cellStyle.Font.Unit);
+      return new(cellStyle.Font.FontFamily, cellStyle.Font.Size * 0.9f, cellStyle.Font.Style, cellStyle.Font.Unit);
     }
 
     protected override Size GetPreferredSize(Graphics graphics, DataGridViewCellStyle cellStyle, int rowIndex, Size constraintSize)
