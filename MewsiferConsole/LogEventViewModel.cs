@@ -19,6 +19,7 @@ namespace MewsiferConsole
     public string ChannelName => Model.Channel;
     public LogEventViewModel Message => this;
     public string MessageText => Model.Message;
+    public string StackTraceText => string.Join("\n", Model.StackTrace.Select(line => " ⁍ " + line));
     public string Severity { get; }
 
     internal bool MergesWith(LogEvent evt)
@@ -40,6 +41,8 @@ namespace MewsiferConsole
         PropertyChanged?.Invoke(this, new(nameof(MergedCount)));
       }
     }
+
+    public bool HasStackTrace => Model.StackTrace?.Count > 0;
 
     private static string GetSeverityLabel(LogSeverity severity) => severity switch
     {

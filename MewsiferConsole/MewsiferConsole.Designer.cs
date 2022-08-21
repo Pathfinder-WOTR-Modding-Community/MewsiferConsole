@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.logTable = new System.Windows.Forms.DataGridView();
             this.Severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -73,28 +73,28 @@
             // 
             this.logTable.AllowUserToAddRows = false;
             this.logTable.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.logTable.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.logTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.logTable.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.logTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.logTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.logTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Severity,
             this.ChannelName});
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.logTable.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.logTable.DefaultCellStyle = dataGridViewCellStyle4;
             this.logTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logTable.Location = new System.Drawing.Point(2, 48);
             this.logTable.Margin = new System.Windows.Forms.Padding(2);
@@ -110,8 +110,8 @@
             // Severity
             // 
             this.Severity.DataPropertyName = "Severity";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Severity.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Severity.DefaultCellStyle = dataGridViewCellStyle3;
             this.Severity.HeaderText = "Level";
             this.Severity.MinimumWidth = 55;
             this.Severity.Name = "Severity";
@@ -135,11 +135,11 @@
             this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.topPanelTable.Controls.Add(this.errCount, 4, 0);
             this.topPanelTable.Controls.Add(this.warnCount, 5, 0);
             this.topPanelTable.Controls.Add(this.infoCount, 6, 0);
@@ -162,9 +162,9 @@
             this.errCount.AutoSize = true;
             this.errCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.errCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.errCount.Location = new System.Drawing.Point(1711, 0);
+            this.errCount.Location = new System.Drawing.Point(1631, 0);
             this.errCount.Name = "errCount";
-            this.errCount.Size = new System.Drawing.Size(74, 42);
+            this.errCount.Size = new System.Drawing.Size(94, 42);
             this.errCount.TabIndex = 2;
             this.errCount.Text = "E: 0";
             this.errCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -174,9 +174,9 @@
             this.warnCount.AutoSize = true;
             this.warnCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.warnCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.warnCount.Location = new System.Drawing.Point(1791, 0);
+            this.warnCount.Location = new System.Drawing.Point(1731, 0);
             this.warnCount.Name = "warnCount";
-            this.warnCount.Size = new System.Drawing.Size(74, 42);
+            this.warnCount.Size = new System.Drawing.Size(94, 42);
             this.warnCount.TabIndex = 3;
             this.warnCount.Text = "W: 0";
             this.warnCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -186,9 +186,9 @@
             this.infoCount.AutoSize = true;
             this.infoCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infoCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.infoCount.Location = new System.Drawing.Point(1871, 0);
+            this.infoCount.Location = new System.Drawing.Point(1831, 0);
             this.infoCount.Name = "infoCount";
-            this.infoCount.Size = new System.Drawing.Size(74, 42);
+            this.infoCount.Size = new System.Drawing.Size(94, 42);
             this.infoCount.TabIndex = 4;
             this.infoCount.Text = "I: 0";
             this.infoCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -198,9 +198,9 @@
             this.shownCount.AutoSize = true;
             this.shownCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.shownCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.shownCount.Location = new System.Drawing.Point(1591, 0);
+            this.shownCount.Location = new System.Drawing.Point(1481, 0);
             this.shownCount.Name = "shownCount";
-            this.shownCount.Size = new System.Drawing.Size(114, 42);
+            this.shownCount.Size = new System.Drawing.Size(144, 42);
             this.shownCount.TabIndex = 5;
             this.shownCount.Text = "0/0";
             this.shownCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -212,7 +212,7 @@
             this.OmniFilter.Location = new System.Drawing.Point(2, 3);
             this.OmniFilter.Margin = new System.Windows.Forms.Padding(2);
             this.OmniFilter.Name = "OmniFilter";
-            this.OmniFilter.Size = new System.Drawing.Size(1424, 35);
+            this.OmniFilter.Size = new System.Drawing.Size(1314, 35);
             this.OmniFilter.TabIndex = 1;
             // 
             // TailToggle
@@ -223,7 +223,7 @@
             this.TailToggle.CheckState = System.Windows.Forms.CheckState.Checked;
             this.TailToggle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TailToggle.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.TailToggle.Location = new System.Drawing.Point(1430, 2);
+            this.TailToggle.Location = new System.Drawing.Point(1320, 2);
             this.TailToggle.Margin = new System.Windows.Forms.Padding(2);
             this.TailToggle.Name = "TailToggle";
             this.TailToggle.Size = new System.Drawing.Size(76, 38);
@@ -236,7 +236,7 @@
             // 
             this.Clear.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Clear.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Clear.Location = new System.Drawing.Point(1511, 3);
+            this.Clear.Location = new System.Drawing.Point(1401, 3);
             this.Clear.Name = "Clear";
             this.Clear.Size = new System.Drawing.Size(74, 36);
             this.Clear.TabIndex = 6;
@@ -249,7 +249,7 @@
             this.verCount.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.verCount.AutoSize = true;
             this.verCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.verCount.Location = new System.Drawing.Point(1961, 8);
+            this.verCount.Location = new System.Drawing.Point(1951, 8);
             this.verCount.Name = "verCount";
             this.verCount.Size = new System.Drawing.Size(54, 25);
             this.verCount.TabIndex = 7;
