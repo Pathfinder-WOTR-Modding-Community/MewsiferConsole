@@ -39,10 +39,9 @@ namespace MewsiferConsole
     {
       LogEventViewModel model = ViewModel[index];
 
-      bool channelMatch = currentFilter.MatchChannel(model.ChannelName);
-      bool rawMatch = currentFilter.MatchRaw(model.MessageText);
+      
 
-      if (rawMatch && channelMatch)
+      if (currentFilter.Matches(model))
       {
         int remappedIndex = Remap.Count;
         Remap.Add(index);
@@ -294,6 +293,11 @@ namespace MewsiferConsole
   {
     public MatchTermList messageTerms = new();
 
+    public MatchTermList sevTerms = new()
+    {
+      CombinePositiveWith = TermCombiner.Or
+    };
+
     public MatchTermList channelTerms = new()
     {
       CombinePositiveWith = TermCombiner.Or
@@ -303,6 +307,9 @@ namespace MewsiferConsole
     {
       get
       {
+        foreach (var rendered in sevTerms.RenderComponents("sev:"))
+          yield return rendered;
+
         foreach (var rendered in channelTerms.RenderComponents("ch:"))
           yield return rendered;
 
@@ -321,6 +328,10 @@ namespace MewsiferConsole
     {
       return messageTerms.Matches(message);
     }
+    internal bool MatchSev(string sev)
+    {
+      return sevTerms.Matches(sev);
+    }
 
     internal void Add(string c)
     {
@@ -333,6 +344,11 @@ namespace MewsiferConsole
         if (kv.Length == 2 && kv[0] is "ch" or "-ch")
         {
           channelTerms.Add(kv[0][0] is '-', kv[1]);
+          addedSpecial = true;
+        }
+        else if (kv.Length == 2 && kv[0] is "sev" or "-sev")
+        {
+          sevTerms.Add(kv[0][0] is '-', kv[1]);
           addedSpecial = true;
         }
       }
@@ -350,12 +366,18 @@ namespace MewsiferConsole
     {
       return obj is FilterModel model &&
              EqualityComparer<MatchTermList>.Default.Equals(messageTerms, model.messageTerms) &&
+             EqualityComparer<MatchTermList>.Default.Equals(sevTerms, model.sevTerms) &&
              EqualityComparer<MatchTermList>.Default.Equals(channelTerms, model.channelTerms);
     }
 
     public override int GetHashCode()
     {
-      return HashCode.Combine(messageTerms, channelTerms);
+      return HashCode.Combine(messageTerms, channelTerms, sevTerms);
+    }
+
+    internal bool Matches(LogEventViewModel model)
+    {
+      return MatchChannel(model.ChannelName) && MatchRaw(model.MessageText) && MatchSev(model.Severity);
     }
 
     public static bool operator ==(FilterModel lhs, FilterModel rhs) => lhs.Equals(rhs);

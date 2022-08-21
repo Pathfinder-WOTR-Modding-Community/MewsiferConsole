@@ -72,9 +72,6 @@ namespace MewsiferConsole
 
     }
 
-    private bool HasMouseOver = false;
-
-
     protected override void OnMouseDown(DataGridViewCellMouseEventArgs e)
     {
       if (DataGridView is null) return;
