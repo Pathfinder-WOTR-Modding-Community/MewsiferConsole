@@ -86,9 +86,11 @@ namespace MewsiferConsole
             Messages.ResetBindings();
             FilterView.RemoveFilter();
             RenderCountLabels();
-            IsScrolledToEnd = true;
           });
         };
+        TailToggle.Checked = false;
+        TailToggle.Enabled = false;
+        Clear.Enabled = false;
       }
       else
       {
@@ -119,6 +121,7 @@ namespace MewsiferConsole
 
       logTable.Scroll += (obj, evt) =>
       {
+        if (!TailToggle.Enabled) return;
         if (evt.NewValue < evt.OldValue) { TailToggle.Checked = false; }
         if (evt.NewValue > evt.OldValue && IsScrolledToEnd) { TailToggle.Checked = true; }
       };
