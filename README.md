@@ -51,7 +51,7 @@ Filter by log level / severity:
 When combining filters a log is shown if it matches at least one include filter and *zero* exclude filters. For example, if your filter was `ch:Mews ch:Tabletop -sev:E -sev:V`:
 
 | Log Event                                       | Shown? | Why?                |
-| ----------------------------------------------- | ------ | ------------------- |
+| ----------------------------------------------- | :----: | ------------------- |
 | (I) [MewsiferConsole.Mod] Connected             | Yes    | Matching channel    |
 | (E) [MewsiferConsole.Mod] An exception occurred | No     | Severity excluded   |
 | (V) [MewsiferConsole.Mod] Sending message       | No     | Severity excluded   |
@@ -64,7 +64,7 @@ When combining filters a log is shown if it matches at least one include filter 
 For UMM logs:
 
 | Logging Method             | Severity  |
-| -------------------------- | --------- |
+| -------------------------- | :-------: |
 | `ModLogger.Log()`          | (I)nfo    |
 | `ModLogger.Warning()`      | (W)arning |
 | `ModLogger.Error()`        | (E)rror   |
@@ -75,7 +75,7 @@ For UMM logs:
 For Game logs:
 
 | Logging Method           | Severity  |
-| ------------------------ | --------- |
+| ------------------------ | :-------: |
 | `LogChannel.Log()`       | (I)nfo    |
 | `LogChannel.Verbose()`   | (I)nfo    |
 | `LogChannel.Warning()`   | (W)arning |
@@ -96,7 +96,7 @@ If you want to capture bug reports for your mod you can call `Mewsifer.GenerateR
 
 Example:
 
-<code>
+```C#
 // Request in a new thread to prevent blocking the current thread from executing when Wait() is called
 new Thread(new ThreadStart(LogReport)).Start();
 
@@ -107,6 +107,6 @@ private static void LogReport()
   // Prints the report file path to the log
   Logger.Log($"Report generated: {report.Result}");
 }
-</code>
+```
 
 Once you have the file you can open it by launching the console and selecting "Load from file" at startup.
