@@ -178,7 +178,6 @@ namespace MewsiferConsole
 
     private void Clear_Click(object sender, EventArgs e)
     {
-      Messages.Clear();
       FilterView.Clear();
       IndexRowLookup.Clear();
       ByChannel.Clear();
