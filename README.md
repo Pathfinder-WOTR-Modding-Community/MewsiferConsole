@@ -110,3 +110,13 @@ private static void LogReport()
 ```
 
 Once you have the file you can open it by launching the console and selecting "Load from file" at startup.
+
+## Acknowledgements
+
+* The modding community on [Discord](https://discord.com/invite/wotr), an invaluable and supportive resource for help modding.
+* All the Owlcat modders who came before me, wrote documents, and open sourced their code.
+
+## Interested in modding?
+
+* Check out the [OwlcatModdingWiki](https://github.com/WittleWolfie/OwlcatModdingWiki/wiki).
+* Join us on [Discord](https://discord.com/invite/wotr).
