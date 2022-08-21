@@ -126,7 +126,6 @@ namespace MewsiferConsole.Mod.IPC
       {
         while (Enabled)
         {
-          TestConnection(writer);
           if (MessageQueue.Any() && MessageQueue.TryDequeue(out string message))
           {
             writer.Write(message);
@@ -139,16 +138,6 @@ namespace MewsiferConsole.Mod.IPC
           }
         }
       }
-    }
-
-    private static readonly string ConnectionTest =
-      JsonConvert.SerializeObject(
-        PipeMessage.ForServerCommand(ClientToServerCommand.TestConnection()),
-        SerializerSettings);
-    private void TestConnection(BinaryWriter writer)
-    {
-      writer.Write(ConnectionTest);
-      writer.Flush();
     }
   }
 }
