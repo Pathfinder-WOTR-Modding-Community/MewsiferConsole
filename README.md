@@ -1,6 +1,12 @@
 # MewsiferConsole
 An improved remote console for reading logs in Pathfinder: Wrath of the Righteous.
 
+**Mod Developers: Add `MewsiferConsole.Mod` to `LoadAfter` in your `Info.json` to ensure all of your logs are captured.**
+
+```json
+"LoadAfter": ["MewsiferConsole.Mod"]
+```
+
 ![Console screenshot](https://github.com/Pathfinder-WOTR-Modding-Community/MewsiferConsole/blob/main/screenshots/console.png)
 
 ## Features
