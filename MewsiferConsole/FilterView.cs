@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace MewsiferConsole
@@ -168,7 +169,7 @@ namespace MewsiferConsole
     public void Clear()
     {
       ViewModel.Clear();
-      ApplyFilter("");
+      ApplyFilter("", true);
     }
 
     public bool Contains(object? value)
@@ -214,7 +215,7 @@ namespace MewsiferConsole
     public void RemoveFilter()
     {
       Filter = "";
-      ListChanged?.Invoke(this, new(ListChangedType.Reset, -1));
+      ApplyFilter("", true);
     }
 
     public void RemoveIndex(PropertyDescriptor property)
@@ -255,7 +256,7 @@ namespace MewsiferConsole
     /// If the filter is the same as the currently applied filter it is not re-applied.
     /// </summary>
     /// <param name="text">Textual representation of the filter</param>
-    private void ApplyFilter(string text)
+    private void ApplyFilter(string text, bool force = false)
     {
       text = text.Trim();
 
@@ -268,7 +269,7 @@ namespace MewsiferConsole
         newFilter.Add(c);
       }
 
-      if (newFilter == currentFilter)
+      if (newFilter.Equals(currentFilter) && !force)
       {
         return;
       }
@@ -362,10 +363,12 @@ namespace MewsiferConsole
 
     public override bool Equals(object? obj)
     {
-      return obj is FilterModel model &&
+      bool ret = obj is FilterModel model &&
              EqualityComparer<MatchTermList>.Default.Equals(messageTerms, model.messageTerms) &&
              EqualityComparer<MatchTermList>.Default.Equals(sevTerms, model.sevTerms) &&
              EqualityComparer<MatchTermList>.Default.Equals(channelTerms, model.channelTerms);
+
+      return ret;
     }
 
     public override int GetHashCode()
@@ -390,7 +393,7 @@ namespace MewsiferConsole
 
   public class MatchTermList
   {
-    private readonly List<MatchTerm> terms = new();
+    private readonly HashSet<MatchTerm> terms = new();
     public TermCombiner CombinePositiveWith = TermCombiner.And;
     public TermCombiner CombineNegativeWith = TermCombiner.And;
 
@@ -408,8 +411,10 @@ namespace MewsiferConsole
 
     public override bool Equals(object? obj)
     {
-      return obj is MatchTermList list &&
-             EqualityComparer<List<MatchTerm>>.Default.Equals(terms, list.terms);
+
+      bool ret = obj is MatchTermList list && terms.SetEquals(list.terms);
+
+      return ret;
     }
 
     public override int GetHashCode()
@@ -421,7 +426,7 @@ namespace MewsiferConsole
     {
       if (terms.Count == 0) return true;
 
-      bool ret = terms[0].Matches(input);
+      bool ret = terms.First().Matches(input);
 
       foreach (var term in terms.Skip(1))
       {
@@ -457,6 +462,7 @@ namespace MewsiferConsole
              negated == term.negated;
     }
 
+
     public override int GetHashCode()
     {
       return HashCode.Combine(value, negated);
@@ -466,6 +472,5 @@ namespace MewsiferConsole
     {
       return input.Contains(value, StringComparison.OrdinalIgnoreCase) != negated;
     }
-
   }
 }

@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Diagnostics;
 using MewsiferConsole.Common;
 using Timer = System.Windows.Forms.Timer;
 
@@ -54,9 +55,13 @@ namespace MewsiferConsole
         DataPropertyName = "Message",
         AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
         FillWeight = 200
+        
       };
       logTable.Columns.Add(messageCol);
       logTable.AllowUserToResizeRows = false;
+
+      logTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+      logTable.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
       infoCountVal = new(infoCount, "I");
       warnCountVal = new(warnCount, "W");
@@ -73,6 +78,9 @@ namespace MewsiferConsole
 
       tooltip.SetToolTip(shownCount, "Displayed messages / Total message");
 
+      var watch = new Stopwatch();
+      watch.Start();
+
       if (App.MessageSource.IsBounded)
       {
         Messages.RaiseListChangedEvents = false;
@@ -80,15 +88,26 @@ namespace MewsiferConsole
         {
           BeginInvoke(() =>
           {
+            var doneLoading = watch.Elapsed;
+            watch.Restart();
             ProcessPendingMessages();
+            var doneProcessing = watch.Elapsed;
+            watch.Restart();
 
             Messages.RaiseListChangedEvents = true;
             Messages.ResetBindings();
             FilterView.RemoveFilter();
             RenderCountLabels();
-            IsScrolledToEnd = true;
+            var doneRendering = watch.Elapsed;
+
+            Console.WriteLine($"   Loading: ${doneLoading}");
+            Console.WriteLine($"Processing: ${doneProcessing}");
+            Console.WriteLine($" Rendering: ${doneRendering}");
           });
         };
+        TailToggle.Checked = false;
+        TailToggle.Enabled = false;
+        Clear.Enabled = false;
       }
       else
       {
@@ -119,6 +138,7 @@ namespace MewsiferConsole
 
       logTable.Scroll += (obj, evt) =>
       {
+        if (!TailToggle.Enabled) return;
         if (evt.NewValue < evt.OldValue) { TailToggle.Checked = false; }
         if (evt.NewValue > evt.OldValue && IsScrolledToEnd) { TailToggle.Checked = true; }
       };
