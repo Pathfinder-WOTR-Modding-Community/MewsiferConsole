@@ -108,3 +108,5 @@ private static void LogReport()
   Logger.Log($"Report generated: {report.Result}");
 }
 </code>
+
+Once you have the file you can open it by launching the console and selecting "Load from file" at startup.
