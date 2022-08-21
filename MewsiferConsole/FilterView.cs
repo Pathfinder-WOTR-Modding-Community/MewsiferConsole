@@ -167,7 +167,8 @@ namespace MewsiferConsole
 
     public void Clear()
     {
-      throw new NotImplementedException();
+      ViewModel.Clear();
+      ApplyFilter("");
     }
 
     public bool Contains(object? value)
