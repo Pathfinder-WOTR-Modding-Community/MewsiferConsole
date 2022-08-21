@@ -39,8 +39,6 @@ namespace MewsiferConsole
     {
       LogEventViewModel model = ViewModel[index];
 
-      
-
       if (currentFilter.Matches(model))
       {
         int remappedIndex = Remap.Count;
@@ -108,7 +106,6 @@ namespace MewsiferConsole
     }
 
     private FilterModel currentFilter = new();
-    private HashSet<string> rawTerms = new();
 
     public string? Filter
     {

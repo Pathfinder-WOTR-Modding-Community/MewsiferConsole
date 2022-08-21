@@ -38,6 +38,7 @@ namespace MewsiferConsole
     private readonly Count infoCountVal;
     private readonly Count warnCountVal;
     private readonly Count errCountVal;
+    private readonly Count verCountVal;
 
     public MewsiferConsole()
     {
@@ -57,10 +58,10 @@ namespace MewsiferConsole
       logTable.Columns.Add(messageCol);
       logTable.AllowUserToResizeRows = false;
 
-
       infoCountVal = new(infoCount, "I");
       warnCountVal = new(warnCount, "W");
       errCountVal = new(errCount, "E");
+      verCountVal = new(verCount, "V");
 
       logTable.DataSource = FilterView;
       logTable.RowsAdded += (_, _) => OnRowsAddedOrRemoved();
@@ -86,7 +87,6 @@ namespace MewsiferConsole
             FilterView.RemoveFilter();
             RenderCountLabels();
             IsScrolledToEnd = true;
-
           });
         };
       }
@@ -132,7 +132,6 @@ namespace MewsiferConsole
       {
         FilterView.Filter = OmniFilter.Text.Trim();
       };
-
     }
 
     private void RenderCountLabels()
@@ -140,6 +139,7 @@ namespace MewsiferConsole
       infoCountVal.Render();
       warnCountVal.Render();
       errCountVal.Render();
+      verCountVal.Render();
     }
 
     private void OnRowsAddedOrRemoved()
@@ -176,6 +176,19 @@ namespace MewsiferConsole
       }
     }
 
+    private void Clear_Click(object sender, EventArgs e)
+    {
+      Messages.Clear();
+      FilterView.Clear();
+      IndexRowLookup.Clear();
+      ByChannel.Clear();
+
+      infoCountVal.Reset();
+      warnCountVal.Reset();
+      errCountVal.Reset();
+      verCountVal.Reset();
+    }
+
     private void ProcessPendingMessages()
     {
       List<LogEvent> toProcess;
@@ -208,7 +221,7 @@ namespace MewsiferConsole
             LogSeverity.Info => infoCountVal,
             LogSeverity.Warning => warnCountVal,
             LogSeverity.Error => errCountVal,
-            LogSeverity.Verbose => infoCountVal,
+            LogSeverity.Verbose => verCountVal,
             _ => throw new NotImplementedException(),
           };
 
@@ -229,6 +242,7 @@ namespace MewsiferConsole
       //bindingSource.ResetBindings(false);
       toProcess.Clear();
     }
+
     public class Count
     {
       public int Value = 0;
@@ -245,11 +259,12 @@ namespace MewsiferConsole
       {
         Label.Text = $"{Prefix}: {Value}";
       }
-    }
 
-        private void toolTip1_Popup(object sender, PopupEventArgs e)
-        {
-
-        }
+      internal void Reset()
+      {
+        Value = 0;
+        Render();
+      }
     }
+  }
 }
