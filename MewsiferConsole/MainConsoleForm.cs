@@ -5,7 +5,7 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace MewsiferConsole
 {
-  public partial class MewsiferConsole : Form
+  public partial class MainConsoleForm : Form
   {
     private readonly BindingList<LogEventViewModel> Messages;
     private readonly LogMessageFilterView FilterView;
@@ -41,7 +41,7 @@ namespace MewsiferConsole
     private readonly Count errCountVal;
     private readonly Count verCountVal;
 
-    public MewsiferConsole()
+    public MainConsoleForm()
     {
       InitializeComponent();
       Messages = new();
@@ -60,7 +60,10 @@ namespace MewsiferConsole
       logTable.Columns.Add(messageCol);
       logTable.AllowUserToResizeRows = false;
 
-      logTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+      logTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+      logTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+      logTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
       logTable.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
       infoCountVal = new(infoCount, "I");
@@ -71,6 +74,13 @@ namespace MewsiferConsole
       logTable.DataSource = FilterView;
       logTable.RowsAdded += (_, _) => OnRowsAddedOrRemoved();
       logTable.RowsRemoved += (_, _) => OnRowsAddedOrRemoved();
+
+      logTable.SelectionChanged += (_, evt) => {
+        if (logTable.SelectedRows.Count == 1 && logTable.SelectedRows[0].DataBoundItem is LogEventViewModel vm)
+          detailView.ViewModel = vm;
+        else
+          detailView.ViewModel = null;
+      };
 
       tooltip.SetToolTip(infoCount, "Total number of messages with the severity level: info");
       tooltip.SetToolTip(warnCount, "Total number of messages with the severity level: warning");

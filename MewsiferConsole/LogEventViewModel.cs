@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace MewsiferConsole
 {
-  internal class LogEventViewModel : INotifyPropertyChanged
+  public class LogEventViewModel : INotifyPropertyChanged
   {
     public readonly LogEvent Model;
 

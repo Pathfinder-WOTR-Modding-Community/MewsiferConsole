@@ -15,72 +15,76 @@ namespace MewsiferConsole
     {
       if (DataGridView is null) return;
 
+      var bg = Selected ? cellStyle.SelectionBackColor : cellStyle.BackColor;
+
+
       if (paintParts.HasFlag(DataGridViewPaintParts.ContentBackground))
-        graphics.FillRectangle(new SolidBrush(cellStyle.BackColor), cellBounds);
+        graphics.FillRectangle(new SolidBrush(bg), cellBounds);
       //base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts);
 
       if (value is not LogEventViewModel logEventVM) return;
 
+
       if (paintParts.HasFlag(DataGridViewPaintParts.ContentForeground))
       {
+        var fg = Selected ? cellStyle.SelectionForeColor : cellStyle.ForeColor;
+        var font = cellStyle.Font;
+        if (logEventVM.HasStackTrace)
+        {
+          fg = Color.DarkRed;
+          font = new(font, FontStyle.Bold);
+        }
+
         var bounds = new Rectangle(cellBounds.Left, cellBounds.Top, cellBounds.Width - 40, cellBounds.Height);
-        graphics.DrawString(logEventVM.MessageText.Trim(), cellStyle.Font, new SolidBrush(cellStyle.ForeColor), bounds);
-
-
+        graphics.DrawString(logEventVM.MessageText.Trim(), font, new SolidBrush(fg), bounds);
 
         if (logEventVM.HasStackTrace)
         {
-          int lineHeight = (int)Math.Ceiling(graphics.MeasureString(logEventVM.MessageText.Trim(), cellStyle.Font, bounds.Width).Height);
+          int lineHeight = (int)Math.Ceiling(graphics.MeasureString(logEventVM.MessageText.Trim(), font, bounds.Width).Height);
           var buttonBounds = new Rectangle(cellBounds.Right - 38, cellBounds.Top, 32, lineHeight);
-          var font = MakeStackTraceFont(cellStyle);
+
           var buttonFont = new Font(cellStyle.Font, FontStyle.Bold);
+          graphics.DrawString("!!", buttonFont, Brushes.Black, buttonBounds);
 
-          var buttonText = "?";
-          if (logEventVM.Expanded)
-            buttonText = "-";
-          else
-            buttonText = "+";
-          graphics.DrawString(buttonText, buttonFont, Brushes.Black, buttonBounds);
-
-          if (logEventVM.Expanded)
-          {
-            //var newLineHeight = font.Height;
-            bounds = new(cellBounds.Left, cellBounds.Top + lineHeight, cellBounds.Width, cellBounds.Height - lineHeight);
-            var format = new StringFormat();
-            graphics.DrawString(logEventVM.StackTraceText, font, new SolidBrush(cellStyle.ForeColor), bounds);
-          }
+          //if (logEventVM.Expanded)
+          //{
+          //  //var newLineHeight = font.Height;
+          //  bounds = new(cellBounds.Left, cellBounds.Top + lineHeight, cellBounds.Width, cellBounds.Height - lineHeight);
+          //  var format = new StringFormat();
+          //  graphics.DrawString(logEventVM.StackTraceText, font, new SolidBrush(fg), bounds);
+          //}
         }
       }
 
       if (paintParts.HasFlag(DataGridViewPaintParts.Border))
       {
-        graphics.DrawLine(new Pen(cellStyle.SelectionBackColor, 1), cellBounds.Left - 1, cellBounds.Top - 1, cellBounds.Right, cellBounds.Top - 1);
-        graphics.DrawLine(new Pen(cellStyle.SelectionBackColor, 1), cellBounds.Left - 1, cellBounds.Bottom - 1, cellBounds.Right, cellBounds.Bottom - 1);
+        graphics.DrawLine(new Pen(this.DataGridView.GridColor, 1), cellBounds.Left - 1, cellBounds.Top - 1, cellBounds.Right, cellBounds.Top - 1);
+        graphics.DrawLine(new Pen(this.DataGridView.GridColor, 1), cellBounds.Left - 1, cellBounds.Bottom - 1, cellBounds.Right, cellBounds.Bottom - 1);
       }
 
     }
 
-    private static Font MakeStackTraceFont(DataGridViewCellStyle cellStyle)
-    {
-      return new(cellStyle.Font.FontFamily, cellStyle.Font.Size * 0.9f, cellStyle.Font.Style, cellStyle.Font.Unit);
-    }
+    //private static Font MakeStackTraceFont(DataGridViewCellStyle cellStyle)
+    //{
+    //  return new(cellStyle.Font.FontFamily, cellStyle.Font.Size * 0.9f, cellStyle.Font.Style, cellStyle.Font.Unit);
+    //}
 
-    protected override Size GetPreferredSize(Graphics graphics, DataGridViewCellStyle cellStyle, int rowIndex, Size constraintSize)
-    {
-      if (DataGridView is null) return base.GetPreferredSize(graphics, cellStyle, rowIndex, constraintSize);
-      if (DataGridView.Rows[rowIndex].DataBoundItem is not LogEventViewModel vm) return new(10, DataGridView.RowTemplate.Height);
+    //protected override Size GetPreferredSize(Graphics graphics, DataGridViewCellStyle cellStyle, int rowIndex, Size constraintSize)
+    //{
+    //  if (DataGridView is null) return base.GetPreferredSize(graphics, cellStyle, rowIndex, constraintSize);
+    //  if (DataGridView.Rows[rowIndex].DataBoundItem is not LogEventViewModel vm) return new(10, DataGridView.RowTemplate.Height);
 
-      var needed = graphics.MeasureString(vm.MessageText.Trim(), cellStyle.Font, OwningColumn.Width - 40);
+    //  var needed = graphics.MeasureString(vm.MessageText.Trim(), cellStyle.Font, OwningColumn.Width - 40);
 
-      int extraNeeded = 0;
-      if (vm.Expanded)
-      {
-        extraNeeded = (int)Math.Ceiling(graphics.MeasureString(vm.StackTraceText, MakeStackTraceFont(cellStyle), OwningColumn.Width).Height);
-      }
+    //  int extraNeeded = 0;
+    //  if (vm.Expanded)
+    //  {
+    //    extraNeeded = (int)Math.Ceiling(graphics.MeasureString(vm.StackTraceText, MakeStackTraceFont(cellStyle), OwningColumn.Width).Height);
+    //  }
 
-      return new((int)Math.Ceiling(needed.Width), (int)Math.Ceiling(needed.Height) + extraNeeded);
+    //  return new((int)Math.Ceiling(needed.Width), (int)Math.Ceiling(needed.Height) + extraNeeded);
 
-    }
+    //}
 
 
     protected override void OnMouseDown(DataGridViewCellMouseEventArgs e)

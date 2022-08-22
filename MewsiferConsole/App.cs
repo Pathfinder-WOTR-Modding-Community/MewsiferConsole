@@ -37,7 +37,7 @@ namespace MewsiferConsole
       }
 
       if (MessageSource.Source != null)
-        Application.Run(new MewsiferConsole());
+        Application.Run(new MainConsoleForm());
 
     }
   }
