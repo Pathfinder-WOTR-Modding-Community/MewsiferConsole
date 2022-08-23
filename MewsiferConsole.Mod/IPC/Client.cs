@@ -68,9 +68,6 @@ namespace MewsiferConsole.Mod.IPC
       }
     }
 
-    private static readonly int[] NoServerDelay = new int[] { 5 * 1000, 15 * 1000, 30 * 1000, 60 * 1000 };
-    private int ServerConnectAttempts = 0;
-
     /// <summary>
     /// Since async pipes aren't available just loop waiting for input in a thread. This is the outer loop which
     /// connects and reconnects, WriteStream is the inner loop which writes output.
@@ -85,21 +82,19 @@ namespace MewsiferConsole.Mod.IPC
           Main.Logger.NativeLog($"Connecting to MewsiferConsole: {PipeName}");
           Stream = new(".", PipeName, PipeDirection.Out);
           Stream.Connect();
-          ServerConnectAttempts = 0; // Reset
           Main.Logger.Log("Connection established.");
 
           WriteStream();
         }
         catch (Win32Exception)
         {
-          ServerConnectAttempts++;
           // No server available, sleep with backoff
-          Thread.Sleep(NoServerDelay[Math.Max(ServerConnectAttempts, 5)]);
+          Thread.Sleep(10 * 1000);
         }
         catch (IOException)
         {
           Main.Logger.Log("MewsiferConsole died, waiting for its return.");
-          Thread.Sleep(10000);
+          Thread.Sleep(10 * 1000);
         }
         catch (Exception e)
         {
@@ -115,37 +110,29 @@ namespace MewsiferConsole.Mod.IPC
     {
       using (var writer = new BinaryWriter(Stream))
       {
-        using (var stringWriter = new StringWriter())
+        int written = 0;
+        while (Enabled)
         {
-          using (var jsonWriter = new JsonTextWriter(stringWriter))
+          if (MessageQueue.Any() && MessageQueue.TryPeek(out PipeMessage message))
           {
-            int written = 0;
-            while (Enabled)
+            written++;
+
+            writer.Write(JsonConvert.SerializeObject(message));
+            writer.Flush();
+            MessageQueue.TryDequeue(out _);
+
+            if (written >= MaxMessagesPerFrame)
             {
-              if (MessageQueue.Any() && MessageQueue.TryPeek(out PipeMessage message))
-              {
-                message.WriteToJson(jsonWriter);
-                var stringMessage = stringWriter.ToString();
-                jsonWriter.Flush();
-
-                writer.Write(stringMessage);
-                writer.Flush();
-                MessageQueue.TryDequeue(out _);
-                written++;
-
-                if (written >= MaxMessagesPerFrame)
-                {
-                  written = 0;
-                  // Sleep to minimize CPU usage
-                  Thread.Sleep(FrameDelay);
-                }
-              }
-              else
-              {
-                // Wait for more messages
-                Thread.Sleep(1000);
-              }
+              written = 0;
+              // Sleep to minimize CPU usage
+              Thread.Sleep(FrameDelay);
             }
+          }
+          else
+          {
+            written = 0;
+            // Wait for more messages
+            Thread.Sleep(1000);
           }
         }
       }
