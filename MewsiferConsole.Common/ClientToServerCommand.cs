@@ -31,10 +31,12 @@ namespace MewsiferConsole.Common
 
       if (ConnectionTest is null)
       {
+        writer.WritePropertyName(nameof(VersionCheck));
         VersionCheck.WriteToJson(writer);
       }
       else
       {
+        writer.WritePropertyName(nameof(ConnectionTest));
         ConnectionTest.WriteToJson(writer);
       }
 
