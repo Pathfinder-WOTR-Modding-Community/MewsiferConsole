@@ -137,7 +137,7 @@ namespace MewsiferConsole.Mod.IPC
                 {
                   written = 0;
                   // Sleep to minimize CPU usage
-                  Thread.Sleep(Client.FrameDelay);
+                  Thread.Sleep(FrameDelay);
                 }
               }
               else
