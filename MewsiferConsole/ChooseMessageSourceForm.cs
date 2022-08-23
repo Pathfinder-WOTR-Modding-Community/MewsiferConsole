@@ -2,9 +2,29 @@
 {
   public partial class ChooseMessageSourceForm : Form
   {
+    public bool PointingRight = true;
     public ChooseMessageSourceForm()
     {
       InitializeComponent();
+
+      fromGame.MouseEnter += (_, _) =>
+      {
+        if (!PointingRight)
+        {
+          PointingRight = true;
+          catPoint.Image.RotateFlip(RotateFlipType.RotateNoneFlipX);
+          catPoint.Invalidate();
+        }
+      };
+      fromFile.MouseEnter += (_, _) =>
+      {
+        if (PointingRight)
+        {
+          PointingRight = false;
+          catPoint.Image.RotateFlip(RotateFlipType.RotateNoneFlipX);
+          catPoint.Invalidate();
+        }
+      };
     }
 
     private void fromFile_Click(object sender, EventArgs e)

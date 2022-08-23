@@ -43,10 +43,10 @@
             this.verCount = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.logTable = new System.Windows.Forms.DataGridView();
-            this.detailView = new MewsiferConsole.LogEventView();
-            this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.Severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ChannelName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.detailView = new MewsiferConsole.LogEventView();
+            this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.topPanelTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -79,11 +79,11 @@
             this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
+            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
+            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
+            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
+            this.topPanelTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
             this.topPanelTable.Controls.Add(this.errCount, 4, 0);
             this.topPanelTable.Controls.Add(this.warnCount, 5, 0);
             this.topPanelTable.Controls.Add(this.infoCount, 6, 0);
@@ -106,9 +106,9 @@
             this.errCount.AutoSize = true;
             this.errCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.errCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.errCount.Location = new System.Drawing.Point(1263, 0);
+            this.errCount.Location = new System.Drawing.Point(783, 0);
             this.errCount.Name = "errCount";
-            this.errCount.Size = new System.Drawing.Size(94, 42);
+            this.errCount.Size = new System.Drawing.Size(214, 42);
             this.errCount.TabIndex = 2;
             this.errCount.Text = "E: 0";
             this.errCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -118,9 +118,9 @@
             this.warnCount.AutoSize = true;
             this.warnCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.warnCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.warnCount.Location = new System.Drawing.Point(1363, 0);
+            this.warnCount.Location = new System.Drawing.Point(1003, 0);
             this.warnCount.Name = "warnCount";
-            this.warnCount.Size = new System.Drawing.Size(94, 42);
+            this.warnCount.Size = new System.Drawing.Size(214, 42);
             this.warnCount.TabIndex = 3;
             this.warnCount.Text = "W: 0";
             this.warnCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -130,9 +130,9 @@
             this.infoCount.AutoSize = true;
             this.infoCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infoCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.infoCount.Location = new System.Drawing.Point(1463, 0);
+            this.infoCount.Location = new System.Drawing.Point(1223, 0);
             this.infoCount.Name = "infoCount";
-            this.infoCount.Size = new System.Drawing.Size(94, 42);
+            this.infoCount.Size = new System.Drawing.Size(214, 42);
             this.infoCount.TabIndex = 4;
             this.infoCount.Text = "I: 0";
             this.infoCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -142,9 +142,9 @@
             this.shownCount.AutoSize = true;
             this.shownCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.shownCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.shownCount.Location = new System.Drawing.Point(1113, 0);
+            this.shownCount.Location = new System.Drawing.Point(563, 0);
             this.shownCount.Name = "shownCount";
-            this.shownCount.Size = new System.Drawing.Size(144, 42);
+            this.shownCount.Size = new System.Drawing.Size(214, 42);
             this.shownCount.TabIndex = 5;
             this.shownCount.Text = "0/0";
             this.shownCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -156,7 +156,7 @@
             this.OmniFilter.Location = new System.Drawing.Point(2, 3);
             this.OmniFilter.Margin = new System.Windows.Forms.Padding(2);
             this.OmniFilter.Name = "OmniFilter";
-            this.OmniFilter.Size = new System.Drawing.Size(946, 35);
+            this.OmniFilter.Size = new System.Drawing.Size(396, 35);
             this.OmniFilter.TabIndex = 1;
             // 
             // TailToggle
@@ -166,7 +166,7 @@
             this.TailToggle.CheckState = System.Windows.Forms.CheckState.Checked;
             this.TailToggle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TailToggle.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.TailToggle.Location = new System.Drawing.Point(952, 2);
+            this.TailToggle.Location = new System.Drawing.Point(402, 2);
             this.TailToggle.Margin = new System.Windows.Forms.Padding(2);
             this.TailToggle.Name = "TailToggle";
             this.TailToggle.Size = new System.Drawing.Size(76, 38);
@@ -179,7 +179,7 @@
             // 
             this.Clear.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Clear.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Clear.Location = new System.Drawing.Point(1033, 3);
+            this.Clear.Location = new System.Drawing.Point(483, 3);
             this.Clear.Name = "Clear";
             this.Clear.Size = new System.Drawing.Size(74, 36);
             this.Clear.TabIndex = 6;
@@ -192,7 +192,7 @@
             this.verCount.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.verCount.AutoSize = true;
             this.verCount.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.verCount.Location = new System.Drawing.Point(1583, 8);
+            this.verCount.Location = new System.Drawing.Point(1523, 8);
             this.verCount.Name = "verCount";
             this.verCount.Size = new System.Drawing.Size(54, 25);
             this.verCount.TabIndex = 7;
@@ -238,22 +238,6 @@
             this.logTable.TabIndex = 0;
             this.logTable.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
-            // detailView
-            // 
-            this.detailView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.detailView.Location = new System.Drawing.Point(0, 0);
-            this.detailView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.detailView.Name = "detailView";
-            this.detailView.Size = new System.Drawing.Size(1658, 263);
-            this.detailView.TabIndex = 0;
-            this.detailView.ViewModel = null;
-            // 
-            // tooltip
-            // 
-            this.tooltip.IsBalloon = true;
-            this.tooltip.ShowAlways = true;
-            this.tooltip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            // 
             // Severity
             // 
             this.Severity.DataPropertyName = "Severity";
@@ -275,6 +259,22 @@
             this.ChannelName.Name = "ChannelName";
             this.ChannelName.ReadOnly = true;
             this.ChannelName.Width = 300;
+            // 
+            // detailView
+            // 
+            this.detailView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.detailView.Location = new System.Drawing.Point(0, 0);
+            this.detailView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.detailView.Name = "detailView";
+            this.detailView.Size = new System.Drawing.Size(1658, 263);
+            this.detailView.TabIndex = 0;
+            this.detailView.ViewModel = null;
+            // 
+            // tooltip
+            // 
+            this.tooltip.IsBalloon = true;
+            this.tooltip.ShowAlways = true;
+            this.tooltip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
             // MainConsoleForm
             // 

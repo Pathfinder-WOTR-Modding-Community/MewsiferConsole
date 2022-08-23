@@ -133,11 +133,12 @@ namespace MewsiferConsole
     {
       TitleChanged?.Invoke("local file - " + path);
 
-      var decompressedFile = MewFile.Read(path);
-      foreach (var line in File.ReadLines(decompressedFile))
-      {
+      using var stream = MewFile.Read(path);
+      using var reader = new StreamReader(stream);
+      string? line;
+
+      while ((line = reader.ReadLine()) != null)
         RawMessage?.Invoke(line);
-      }
 
       Completed?.Invoke();
     }
