@@ -1,7 +1,19 @@
 ﻿using Newtonsoft.Json;
+using System.IO;
 
 namespace MewsiferConsole.Common
 {
+  /// <summary>
+  /// Common interface for any objects sent over the pipe.
+  /// </summary>
+  public interface IPipeObject
+  {
+    /// <summary>
+    /// Writes the object to the text writer. Use manual serialization.
+    /// </summary>
+    void WriteToJson(JsonTextWriter writer);
+  }
+
   /// <summary>
   /// API for pipe IPC between MewsiferConsole and MewsiferConsole.Mod.
   /// </summary>
@@ -20,11 +32,10 @@ namespace MewsiferConsole.Common
     /// All fields should be marked with [JsonProperty] and readonly. This ensures serialize/deserialize works and
     /// these should be immutable objects.
     /// </remarks>
-    public class PipeMessage
+    public class PipeMessage : IPipeObject
     {
       [JsonProperty]
       public readonly ClientToServerCommand ServerCommand;
-
       [JsonProperty]
       public readonly LogEvent LogEvent;
 
@@ -43,6 +54,24 @@ namespace MewsiferConsole.Common
       {
         ServerCommand = serverCommand;
         LogEvent = logEvent;
+      }
+
+      public void WriteToJson(JsonTextWriter writer)
+      {
+        writer.WriteStartObject();
+
+        if (ServerCommand is null)
+        {
+          writer.WritePropertyName(nameof(LogEvent));
+          LogEvent.WriteToJson(writer);
+        }
+        else
+        {
+          writer.WritePropertyName(nameof(ServerCommand));
+          ServerCommand.WriteToJson(writer);
+        }
+
+        writer.WriteEndObject();
       }
     }
   }

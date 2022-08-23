@@ -57,17 +57,14 @@ namespace MewsiferConsole.Common
   /// <summary>
   /// Represents a log event from either UMM's <c>ModLogger</c> or Owlcat's <c>LogChannel</c>.
   /// </summary>
-  public class LogEvent
+  public class LogEvent : IPipeObject
   {
     [JsonProperty]
     public readonly LogSeverity Severity;
-
     [JsonProperty]
     public readonly string Channel;
-
     [JsonProperty]
     public readonly string Message;
-
     [JsonProperty]
     public readonly List<string> StackTrace;
 
@@ -78,6 +75,30 @@ namespace MewsiferConsole.Common
       Channel = channel;
       Message = message;
       StackTrace = stackTrace ?? new();
+    }
+
+    public void WriteToJson(JsonTextWriter writer)
+    {
+      writer.WriteStartObject();
+
+      writer.WritePropertyName(nameof(Severity));
+      writer.WriteValue((int)Severity);
+
+      writer.WritePropertyName(nameof(Channel));
+      writer.WriteValue(Channel);
+
+      writer.WritePropertyName(nameof(Message));
+      writer.WriteValue(Message);
+
+      writer.WritePropertyName(nameof(StackTrace));
+      writer.WriteStartArray();
+      foreach (string trace in StackTrace)
+      {
+        writer.WriteValue(trace);
+      }
+      writer.WriteEndArray();
+
+      writer.WriteEndObject();
     }
   }
 }
