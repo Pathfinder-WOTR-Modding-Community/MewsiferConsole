@@ -3,7 +3,6 @@ using MewsiferConsole.Mod.IPC;
 using MewsiferConsole.Mod.OwlcatLogging;
 using MewsiferConsole.Mod.UMMLogging;
 using System;
-using System.Threading;
 using static UnityModManagerNet.UnityModManager;
 using static UnityModManagerNet.UnityModManager.ModEntry;
 

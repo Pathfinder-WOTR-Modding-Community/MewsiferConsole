@@ -1,8 +1,4 @@
-﻿using MewsiferConsole.Common;
-using Newtonsoft.Json;
-using static MewsiferConsole.Common.PipeContract;
-
-namespace MewsiferConsole
+﻿namespace MewsiferConsole
 {
   internal static class App
   {

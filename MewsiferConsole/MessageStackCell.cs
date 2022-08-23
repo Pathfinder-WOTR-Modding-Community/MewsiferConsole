@@ -1,13 +1,4 @@
-﻿using MewsiferConsole.Common;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace MewsiferConsole
+﻿namespace MewsiferConsole
 {
   internal class MessageStackCell : DataGridViewCell
   {
