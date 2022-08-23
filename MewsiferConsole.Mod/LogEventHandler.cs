@@ -1,5 +1,6 @@
 ﻿using MewsiferConsole.Common;
 using MewsiferConsole.Mod.IPC;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -33,8 +34,8 @@ namespace MewsiferConsole.Mod
     /// </summary>
     private readonly string LogTempFile = Path.GetTempFileName();
 
-    // Queue for dumping to the log file. Contains JSON serialized PipeMessage for each log event.
-    private readonly ConcurrentQueue<string> LogFileQueue = new();
+    // Queue for dumping to the log file.
+    private readonly ConcurrentQueue<PipeMessage> LogFileQueue = new();
 
     private Thread WriteToFileThread;
     private int _fileOpen = 0;
@@ -53,7 +54,14 @@ namespace MewsiferConsole.Mod
       try
       {
         Main.Logger.Log($"Logging to {LogTempFile}");
-        File.WriteAllLines(LogTempFile, new string[] { Client.VersionCheck });
+        using (var stringWriter = new StringWriter())
+        {
+          using (var writer = new JsonTextWriter(stringWriter))
+          {
+            PipeContract.VersionCheck.WriteToJson(writer);
+            File.WriteAllLines(LogTempFile, new string[] { stringWriter.ToString() });
+          }
+        }
       }
       catch (Exception e)
       {
@@ -63,7 +71,9 @@ namespace MewsiferConsole.Mod
 
     public void OnLogEvent(LogEvent logEvent)
     {
-      LogFileQueue.Enqueue(Client.Instance.SendMessage(PipeMessage.ForLogEvent(logEvent)));
+      var message = PipeMessage.ForLogEvent(logEvent);
+      Client.Instance.SendMessage(message);
+      LogFileQueue.Enqueue(message);
       if (LogFileQueue.Count > MaxQueue && !FileOpen)
       {
         FileOpen = true;
@@ -79,13 +89,32 @@ namespace MewsiferConsole.Mod
       using (var writer = new StreamWriter(LogTempFile, append: true))
       {
         var processedLogs = new HashSet<string>();
-        while (LogFileQueue.Any())
+        using (var stringWriter = new StringWriter())
         {
-          if (LogFileQueue.TryDequeue(out string message))
+          using (var jsonWriter = new JsonTextWriter(stringWriter))
           {
-            if (processedLogs.Add(message))
+            int written = 0;
+            while (LogFileQueue.Any())
             {
-              writer.WriteLine(message);
+              if (LogFileQueue.TryDequeue(out PipeMessage message))
+              {
+                message.WriteToJson(jsonWriter);
+                var log = stringWriter.ToString();
+                jsonWriter.Flush();
+
+                if (processedLogs.Add(log))
+                {
+                  writer.WriteLine(log);
+                  written++;
+                }
+              }
+
+              if (written >= Client.MaxMessagesPerFrame)
+              {
+                written = 0;
+                // Sleep to minimize CPU usage
+                Thread.Sleep(Client.FrameDelay);
+              }
             }
           }
         }
