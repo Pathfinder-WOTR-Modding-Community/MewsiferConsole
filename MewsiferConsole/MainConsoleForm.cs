@@ -48,11 +48,11 @@ namespace MewsiferConsole
       FilterView = new(Messages);
       logTable.AutoGenerateColumns = false;
 
-      var messageCol = new MessageStackColumn
+      var messageCol = new DataGridViewTextBoxColumn()
       {
         HeaderText = "Message",
         Name = "Message",
-        DataPropertyName = "Message",
+        DataPropertyName = "MessageText",
         AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
         FillWeight = 200
         

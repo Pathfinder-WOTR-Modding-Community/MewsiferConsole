@@ -87,22 +87,28 @@ namespace MewsiferConsole
     //}
 
 
-    protected override void OnMouseDown(DataGridViewCellMouseEventArgs e)
+    //protected override void OnMouseDown(DataGridViewCellMouseEventArgs e)
+    //{
+    //  if (DataGridView is null) return;
+    //  if (DataGridView.Columns[e.ColumnIndex].Name != "Message") return;
+
+    //  if (DataGridView is null) return;
+    //  if (RowIndex == -1) return;
+
+    //  var row = DataGridView.Rows[RowIndex];
+    //  if (row.DataBoundItem is not LogEventViewModel vm) return;
+
+    //  if (vm.HasStackTrace)
+    //  {
+    //    vm.Expanded = !vm.Expanded;
+    //    DataGridView.InvalidateRow(RowIndex);
+    //  }
+    //}
+
+    public static int TotalCreated = 0;
+    public MessageStackCell()
     {
-      if (DataGridView is null) return;
-      if (DataGridView.Columns[e.ColumnIndex].Name != "Message") return;
-
-      if (DataGridView is null) return;
-      if (RowIndex == -1) return;
-
-      var row = DataGridView.Rows[RowIndex];
-      if (row.DataBoundItem is not LogEventViewModel vm) return;
-
-      if (vm.HasStackTrace)
-      {
-        vm.Expanded = !vm.Expanded;
-        DataGridView.InvalidateRow(RowIndex);
-      }
+      TotalCreated++;
     }
   }
 
