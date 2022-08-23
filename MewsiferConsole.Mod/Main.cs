@@ -49,7 +49,7 @@ namespace MewsiferConsole.Mod
     // Test code
     //private static void LogReport()
     //{
-    //  Thread.Sleep(10 * 60 * 1000);
+    //  Thread.Sleep(5 * 60 * 1000);
     //  var report = Mewsifer.GenerateReport("TestReport");
     //  report.Wait();
     //  Logger.Log($"Generated report: {report.Result}");
