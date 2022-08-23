@@ -36,6 +36,7 @@ namespace MewsiferConsole.Common
     {
       [JsonProperty]
       public readonly ClientToServerCommand ServerCommand;
+
       [JsonProperty]
       public readonly LogEvent LogEvent;
 
@@ -72,6 +73,18 @@ namespace MewsiferConsole.Common
         }
 
         writer.WriteEndObject();
+      }
+
+      public string ToJson()
+      {
+        using (var stringWriter = new StringWriter())
+        {
+          using (var writer = new JsonTextWriter(stringWriter))
+          {
+            WriteToJson(writer);
+            return stringWriter.ToString();
+          }
+        }
       }
     }
   }
