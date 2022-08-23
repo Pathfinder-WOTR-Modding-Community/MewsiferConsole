@@ -73,7 +73,7 @@ namespace MewsiferConsole.Mod
       }
     }
 
-    private const int MaxMessagesPerFrame = Client.MaxMessagesPerFrame * 10;
+    private const int MaxMessagesPerFrame = Client.MaxMessagesPerFrame * 5;
     private void WriteToTempFile()
     {
       Main.Logger.Log($"Writing logs to file: {LogTempFile}");
