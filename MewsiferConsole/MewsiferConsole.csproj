@@ -33,4 +33,18 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <!-- Automatically deploys the mod on build -->
+  <Target Name="Deploy" AfterTargets="Build">
+    <ItemGroup>
+      <Assembly Include="$(OutputPath)\$(AssemblyName).dll" />
+      <Assembly Include="$(OutputPath)\Newtonsoft.Json.dll" />
+      <Exe Include="$(OutputPath)\MewsiferConsole.exe" />
+      <Config Include="$(OutputPath)\MewsiferConsole.runtimeconfig.json" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(Assembly)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole" />
+    <Copy SourceFiles="@(Exe)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole" />
+    <Copy SourceFiles="@(Config)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole" />
+  </Target>
+
 </Project>
