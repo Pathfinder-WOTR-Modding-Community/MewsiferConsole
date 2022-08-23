@@ -1,13 +1,10 @@
 ﻿using MewsiferConsole.Common;
 using MewsiferConsole.Mod.IPC;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static MewsiferConsole.Common.PipeContract;
@@ -54,14 +51,7 @@ namespace MewsiferConsole.Mod
       try
       {
         Main.Logger.Log($"Logging to {LogTempFile}");
-        using (var stringWriter = new StringWriter())
-        {
-          using (var writer = new JsonTextWriter(stringWriter))
-          {
-            PipeContract.VersionCheck.WriteToJson(writer);
-            File.WriteAllLines(LogTempFile, new string[] { stringWriter.ToString() });
-          }
-        }
+        File.WriteAllLines(LogTempFile, new string[] { PipeContract.VersionCheck.ToJson() });
       }
       catch (Exception e)
       {
@@ -83,39 +73,31 @@ namespace MewsiferConsole.Mod
       }
     }
 
+    private const int MaxMessagesPerFrame = Client.MaxMessagesPerFrame * 10;
     private void WriteToTempFile()
     {
       Main.Logger.Log($"Writing logs to file: {LogTempFile}");
       using (var writer = new StreamWriter(LogTempFile, append: true))
       {
         var processedLogs = new HashSet<string>();
-        using (var stringWriter = new StringWriter())
+        int written = 0;
+        while (LogFileQueue.Any())
         {
-          using (var jsonWriter = new JsonTextWriter(stringWriter))
+          if (LogFileQueue.TryDequeue(out PipeMessage message))
           {
-            int written = 0;
-            while (LogFileQueue.Any())
+            var log = message.ToJson();
+            if (processedLogs.Add(log))
             {
-              if (LogFileQueue.TryDequeue(out PipeMessage message))
-              {
-                message.WriteToJson(jsonWriter);
-                var log = stringWriter.ToString();
-                jsonWriter.Flush();
-
-                if (processedLogs.Add(log))
-                {
-                  writer.WriteLine(log);
-                  written++;
-                }
-              }
-
-              if (written >= Client.MaxMessagesPerFrame)
-              {
-                written = 0;
-                // Sleep to minimize CPU usage
-                Thread.Sleep(Client.FrameDelay);
-              }
+              writer.WriteLine(log);
+              written++;
             }
+          }
+
+          if (written >= MaxMessagesPerFrame)
+          {
+            written = 0;
+            // Sleep to minimize CPU usage
+            Thread.Sleep(Client.FrameDelay);
           }
         }
       }
