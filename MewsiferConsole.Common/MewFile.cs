@@ -1,5 +1,6 @@
 ﻿using System.IO.Compression;
 using System.IO;
+using System;
 
 namespace MewsiferConsole.Common
 {
@@ -28,20 +29,27 @@ namespace MewsiferConsole.Common
     /// <summary>
     /// Decompresses the contents of mewFile into a temporary file and returns it's path.
     /// </summary>
-    public static string Read(string mewFile)
+    public static Stream Read(string mewFile)
     {
-      var tempFile = Path.GetTempFileName();
-      using (var mewFileStream = File.Open(mewFile, FileMode.Open))
+      string archiveType = "";
+      using (var raw = File.OpenRead(mewFile))
       {
-        using (var tempFileStream = File.Create(tempFile))
-        {
-          using (var decompressor = new GZipStream(mewFileStream, CompressionMode.Decompress))
-          {
-            decompressor.CopyTo(tempFileStream);
-          }
-        }
+        byte[] bytes = new byte[4];
+        if (raw.Length < 4)
+          throw new Exception("truncated file");
+        raw.Read(bytes, 0, 4);
+
+        if (bytes[0] == 0x1f && bytes[1] == 0x8b)
+          archiveType = "gzip";
+        else
+          archiveType = "zip";
       }
-      return tempFile;
+
+      if (archiveType == "gzip")
+        return new GZipStream(File.Open(mewFile, FileMode.Open), CompressionMode.Decompress);
+      else if (archiveType == "zip")
+        return ZipFile.OpenRead(mewFile).Entries[0].Open();
+      throw new Exception("Could not open stream");
     }
   }
 }
