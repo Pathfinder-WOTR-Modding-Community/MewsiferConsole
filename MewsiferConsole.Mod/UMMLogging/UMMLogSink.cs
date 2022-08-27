@@ -1,6 +1,8 @@
 ﻿using MewsiferConsole.Common;
+using Owlcat.Runtime.Core.Logging;
 using System;
 using System.Collections.Generic;
+using LogSeverity = MewsiferConsole.Common.LogSeverity;
 
 namespace MewsiferConsole.Mod.UMMLogging
 {
@@ -47,9 +49,16 @@ namespace MewsiferConsole.Mod.UMMLogging
       var stackTrace = new List<string>();
       while (ex is not null)
       {
-        stackTrace.Add(ex.Message);
+        if (ex.StackTrace is not null)
+        {
+          stackTrace.AddRange(
+            ex.StackTrace.Split(new string[] { Logger.UnityInternalNewLine }, StringSplitOptions.None));
+        }
         ex = ex.InnerException;
-        stackTrace.Add("-- Inner: ");
+        if (ex is not null)
+        {
+          stackTrace.Add($"-- Inner: {ex.Message}");
+        }
       }
       return new(severity, channel, message, stackTrace);
     }
