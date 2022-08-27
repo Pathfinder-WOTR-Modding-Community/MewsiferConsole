@@ -134,6 +134,7 @@ namespace MewsiferConsole.Mod
       var filePath = Path.Combine(Path.GetTempPath(), $"{fileName}.mew");
       Main.Logger.Log($"Writing compressed log file: {filePath}");
       MewFile.Write(LogTempFile, filePath);
+      Main.Logger.Log($"Done writing log dump.");
       return filePath;
     }
   }
