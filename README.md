@@ -21,8 +21,18 @@ An improved remote console for reading logs in Pathfinder: Wrath of the Righteou
 
 1. Download and install [Unity Mod Manager](https://github.com/newman55/unity-mod-manager) (UMM), minimum version 0.23.0
     * Run UMM and set it up for use with Wrath
-2. Download the [latest release](https://github.com/Pathfinder-WOTR-Modding-Community/MewsiferConsole/releases)
+2. Download the [latest MewsiferConsole release](https://github.com/Pathfinder-WOTR-Modding-Community/MewsiferConsole/releases)
+3. Install by dragging the zip file for the latest release into the UMM window under the Mods tabWrath
+
+### Optional: MewsiferConsole Menu
+
+![Menu options screenshot](https://github.com/Pathfinder-WOTR-Modding-Community/MewsiferConsole/blob/main/screenshots/menu.png)
+
+1. Download and install [ModMenu](https://github.com/WittleWolfie/ModMenu)
+2. Download the [latest MewsiferConsole.Menu release](https://github.com/Pathfinder-WOTR-Modding-Community/MewsiferConsole/releases)
 3. Install by dragging the zip file for the latest release into the UMM window under the Mods tab
+
+The options allow you to generate a log dump from inside the options menu. The log dump can be opened in the console, a convenient way for users to provide bug reports.
 
 ## Usage
 
