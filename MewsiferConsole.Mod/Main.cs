@@ -55,7 +55,7 @@ namespace MewsiferConsole.Mod
     //  Logger.Log($"Generated report: {report.Result}");
     //}
 
-    private static bool OnUnload(ModEntry modEntry)
+    public static bool OnUnload(ModEntry modEntry)
     {
       Logger.Log("Unloading.");
       Harmony?.UnpatchAll();
