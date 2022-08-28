@@ -9,7 +9,7 @@
   "Version": {
     "Latest": {
       "Version": "1.1.1",
-      "Url": "https://github.com/Pathfinder-WOTR-Modding-Community/MewsiferConsole/releases/tag/v1.1.1",
+      "Url": "https://github.com/Pathfinder-WOTR-Modding-Community/MewsiferConsole/releases/download/v1.1.1/MewsiferConsole.1.1.1.zip",
       "Changelog": "- Fixed stack trace logging for UMM Logger exceptions\n- Added a menu option to generate a Mod Bug Report (aka log dump) using [ModMenu](https://github.com/WittleWolfie/ModMenu)"
     }
   },
