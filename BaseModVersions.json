@@ -1,6 +1,17 @@
 {
-  "LatestVersion": {
-    "Version": "1.1.1",
-    "Url": "https://github.com/Pathfinder-WOTR-Modding-Community/MewsiferConsole/releases/tag/v1.1.1"
-  }
+  "Name": "Mewsifer Console",
+  "Author": "WittleWolfie and Bubbles",
+  "Id": {
+    "Id": "MewsiferConsole.Mod",
+    "ModType": "UMM"
+  },
+  "Service": "GitHub",
+  "Version": {
+    "Latest": {
+      "Version": "1.1.1",
+      "Url": "https://github.com/Pathfinder-WOTR-Modding-Community/MewsiferConsole/releases/tag/v1.1.1",
+      "Changelog": "- Fixed stack trace logging for UMM Logger exceptions\n- Added a menu option to generate a Mod Bug Report (aka log dump) using [ModMenu](https://github.com/WittleWolfie/ModMenu)"
+    }
+  },
+  "Description": "An improved remote console for reading logs in Pathfinder: Wrath of the Righteous. Supports generating mod bug reports in conjunction with Mewsifer Console Menu."
 }
