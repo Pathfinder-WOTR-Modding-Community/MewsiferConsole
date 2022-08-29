@@ -19,9 +19,8 @@ An improved remote console for reading logs in Pathfinder: Wrath of the Righteou
 
 ## Setup
 
-1. Download and install [Unity Mod Manager](https://github.com/newman55/unity-mod-manager) (UMM), minimum version 0.23.0
-    * Run UMM and set it up for use with Wrath
-2. Search [ModFinder](https://github.com/Pathfinder-WOTR-Modding-Community/ModFinder) for Mewsifer Console
+1. Install [Unity Mod Manager](https://github.com/newman55/unity-mod-manager) (UMM), minimum version 0.23.0, and configure for use with Wrath
+2. Install [ModFinder](https://github.com/Pathfinder-WOTR-Modding-Community/ModFinder) and use it to search for Mewsifer Console
 3. Click "Install"
 4. (Optional) Search for and install Mewsifer Console Menu and its dependency, [ModMenu]()
     * Adds a button to the Mods menu which generates a bug report containing all logs from the current game session
