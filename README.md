@@ -127,6 +127,7 @@ Once you have the file you can open it by launching the console and selecting "L
 
 * The modding community on [Discord](https://discord.com/invite/wotr), an invaluable and supportive resource for help modding.
 * All the Owlcat modders who came before me, wrote documents, and open sourced their code.
+* Cyrix on Discord for the banner illustration used in MewsiferConsole.Menu
 
 ## Interested in modding?
 
