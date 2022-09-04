@@ -19,6 +19,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="bubbles_and_wolfie.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="bubbles_and_wolfie.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- Main Wrath Assembly, Publicized -->
     <Reference Include="Assembly-CSharp.dll">
       <HintPath>$(SolutionDir)lib\Assembly-CSharp.dll</HintPath>
@@ -26,6 +34,12 @@
 
     <Reference Include="Unity.TextMeshPro.dll">
       <HintPath>$(WrathPath)\Wrath_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(WrathPath)\Wrath_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule.dll">
+      <HintPath>$(WrathPath)\Wrath_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>$(WrathPath)\Wrath_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>

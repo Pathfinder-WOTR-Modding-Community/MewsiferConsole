@@ -18,6 +18,7 @@ namespace MewsiferConsole.Menu
     {
       ModMenu.ModMenu.AddSettings(
         SettingsBuilder.New(KeyRoot, GetString(GetKey("title"), "Mewsifer Console"))
+          .AddImage(Helpers.GetMenuBanner(), 200)
           .AddButton(
             Button.New(
                 GetString(GetKey("button-desc"), "Generate a mod bug report"),
