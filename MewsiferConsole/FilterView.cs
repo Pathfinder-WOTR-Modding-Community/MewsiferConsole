@@ -168,7 +168,7 @@ namespace MewsiferConsole
     public void Clear()
     {
       ViewModel.Clear();
-      ApplyFilter("", true);
+      ApplyFilter(Filter ?? "", true);
     }
 
     public bool Contains(object? value)
