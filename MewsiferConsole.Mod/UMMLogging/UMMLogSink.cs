@@ -49,6 +49,7 @@ namespace MewsiferConsole.Mod.UMMLogging
       var stackTrace = new List<string>();
       while (ex is not null)
       {
+        stackTrace.Add(ex.Message);
         if (ex.StackTrace is not null)
         {
           stackTrace.AddRange(
