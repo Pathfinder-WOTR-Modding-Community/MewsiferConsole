@@ -60,7 +60,7 @@ namespace MewsiferConsole.Menu
       Main.Logger.NativeLog($"Generating bug report: {filename}");
       var task = Mewsifer.GenerateReport(filename);
 
-      if (task.Wait(60 * 1000))
+      if (!task.Wait(60 * 1000))
       {
         Main.Logger.Error($"Failed to generate bug report after 60 seconds.");
         return;
