@@ -2,6 +2,21 @@
 
 Follow these step by step instructions and you'll be that mod dev's favorite user.
 
+## Special Case: Unable to Load Save
+
+If you can't load a save the first thing to do is verify the integrity of the game files: [Using GOG](https://support.gog.com/hc/en-us/articles/360003930017-My-game-data-is-corrupt-How-can-I-repair-my-game-?product=gog), [Using Steam](https://help.steampowered.com/en/faqs/view/0C48-FCBD-DA71-93EB).
+
+If that doesn't work either:
+
+* A mod you have installed is failing to configure something
+* You have removed a mod required for the save
+
+If you know you removed a mod, try reinstalling / re-enabling it.
+
+If you still have a problem, skip to [Step 3](#3-collect-a-bug-report) and report the issue in Discord. There's no easy way to identify which mod is at fault so it's best to share in Discord and someone will help you.
+
+Note: If you're not using MewsiferConsole to generate the bug report the important log for this is `GameLogFull.txt`.
+
 ## 1. Figure out the reproduction (or repro) steps
 
 Telling someone "this mod doesn't work" or "your mod breaks my game" isn't helpful. Answer these questions:
