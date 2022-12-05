@@ -13,7 +13,7 @@ If that doesn't work either:
 
 If you know you removed a mod, try reinstalling / re-enabling it.
 
-If you still have a problem, skip to [Step 3](#3-collect-a-bug-report) and report the issue in Discord. There's no easy way to identify which mod is at fault so it's best to share in Discord and someone will help you.
+If you still have a problem, skip to [Step 3a](#3a-collect-logs-manually) and report the issue in Discord. There's no easy way to identify which mod is at fault so it's best to share in Discord and someone will help you.
 
 Note: If you're not using MewsiferConsole to generate the bug report the important log for this is `GameLogFull.txt`.
 
@@ -62,7 +62,9 @@ Installed Mods: `TTT-Core, TTT-Base, TTT-Reworks, ToyBox, BubbleBuffs, BubbleTwe
 
 ![Menu options screenshot](https://github.com/Pathfinder-WOTR-Modding-Community/MewsiferConsole/blob/main/screenshots/menu.png)
 
-If you have problems with this, you can instead copy the logs manually:
+### 3a. Collect Logs Manually 
+
+If you can't get the game to load at all or don't want to use MewsiferConsole, provide these log files:
 
 `%UserProfile%\AppData\LocalLow\Owlcat Games\Pathfinder Wrath of the Righteous\GameLogFull.txt`
 `%UserProfile%\AppData\LocalLow\Owlcat Games\Pathfinder Wrath of the Righteous\Player.log`
