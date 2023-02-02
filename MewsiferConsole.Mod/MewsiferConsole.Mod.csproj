@@ -88,9 +88,9 @@
       <ModConfig Include="$(OutputPath)\Info.json" />
     </ItemGroup>
 
-    <Copy SourceFiles="@(Assembly)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole" />
-    <Copy SourceFiles="@(Common)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole" />
-    <Copy SourceFiles="@(ModConfig)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole" />
+    <Copy SourceFiles="@(Assembly)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole.Mod" />
+    <Copy SourceFiles="@(Common)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole.Mod" />
+    <Copy SourceFiles="@(ModConfig)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole.Mod" />
   </Target>
 
 </Project>

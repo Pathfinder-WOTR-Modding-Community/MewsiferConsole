@@ -51,9 +51,9 @@
       <Config Include="$(OutputPath)\MewsiferConsole.runtimeconfig.json" />
     </ItemGroup>
 
-    <Copy SourceFiles="@(Assembly)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole" />
-    <Copy SourceFiles="@(Exe)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole" />
-    <Copy SourceFiles="@(Config)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole" />
+    <Copy SourceFiles="@(Assembly)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole.Mod" />
+    <Copy SourceFiles="@(Exe)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole.Mod" />
+    <Copy SourceFiles="@(Config)" DestinationFolder="$(WrathPath)\Mods\MewsiferConsole.Mod" />
   </Target>
 
 </Project>
