@@ -53,7 +53,7 @@ namespace MewsiferConsole.Mod.UMMLogging
         if (ex.StackTrace is not null)
         {
           stackTrace.AddRange(
-            ex.StackTrace.Split(new string[] { Logger.UnityInternalNewLine }, StringSplitOptions.None));
+            ex.StackTrace.Split(new char[] { Logger.UnityInternalNewLine }, StringSplitOptions.None));
         }
         ex = ex.InnerException;
         if (ex is not null)
